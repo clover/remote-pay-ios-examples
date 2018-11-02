@@ -1,0 +1,604 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		47A6A763F06D9BCC500DD2D1 /* Pods_CloverConnector_iOS_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DA2362BAF8C98B4434B6E03 /* Pods_CloverConnector_iOS_Example.framework */; };
+		E3614E52215E812C003F0758 /* LoyaltyTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3614E51215E812C003F0758 /* LoyaltyTestViewController.swift */; };
+		E37E1D87218CF40E00F824F3 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = E37E1D86218CF40E00F824F3 /* README.md */; };
+		E37E1D89218D052600F824F3 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = E37E1D88218D052600F824F3 /* LICENSE */; };
+		E39B4AA220EFE0C2008CA6AF /* PreAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A7720EFE0C2008CA6AF /* PreAuthViewController.swift */; };
+		E39B4AA320EFE0C2008CA6AF /* TabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A7820EFE0C2008CA6AF /* TabController.swift */; };
+		E39B4AA420EFE0C2008CA6AF /* ManualRefundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A7920EFE0C2008CA6AF /* ManualRefundViewController.swift */; };
+		E39B4AA520EFE0C2008CA6AF /* MiscViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A7A20EFE0C2008CA6AF /* MiscViewController.swift */; };
+		E39B4AA620EFE0C2008CA6AF /* SimpleTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A7B20EFE0C2008CA6AF /* SimpleTestViewController.swift */; };
+		E39B4AA820EFE0C2008CA6AF /* OrderDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A7D20EFE0C2008CA6AF /* OrderDetailsViewController.swift */; };
+		E39B4AA920EFE0C2008CA6AF /* OrdersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A7E20EFE0C2008CA6AF /* OrdersTableViewController.swift */; };
+		E39B4AAA20EFE0C2008CA6AF /* VaultCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A7F20EFE0C2008CA6AF /* VaultCardViewController.swift */; };
+		E39B4AAB20EFE0C2008CA6AF /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A8020EFE0C2008CA6AF /* RegisterViewController.swift */; };
+		E39B4AAC20EFE0C2008CA6AF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A8120EFE0C2008CA6AF /* ViewController.swift */; };
+		E39B4AAD20EFE0C2008CA6AF /* SignatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A8220EFE0C2008CA6AF /* SignatureView.swift */; };
+		E39B4AAE20EFE0C2008CA6AF /* UITestTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A8320EFE0C2008CA6AF /* UITestTableCell.swift */; };
+		E39B4AAF20EFE0C2008CA6AF /* CloverConnectorListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A8420EFE0C2008CA6AF /* CloverConnectorListener.swift */; };
+		E39B4AB020EFE0C2008CA6AF /* SignatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A8520EFE0C2008CA6AF /* SignatureViewController.swift */; };
+		E39B4AB120EFE0C2008CA6AF /* CurrencyUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A8620EFE0C2008CA6AF /* CurrencyUtils.swift */; };
+		E39B4AB220EFE0C2008CA6AF /* AvailableItems.xib in Resources */ = {isa = PBXBuildFile; fileRef = E39B4A8720EFE0C2008CA6AF /* AvailableItems.xib */; };
+		E39B4AB320EFE0C2008CA6AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E39B4A8A20EFE0C2008CA6AF /* Assets.xcassets */; };
+		E39B4AB420EFE0C2008CA6AF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E39B4A8B20EFE0C2008CA6AF /* LaunchScreen.storyboard */; };
+		E39B4AB520EFE0C2008CA6AF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E39B4A8D20EFE0C2008CA6AF /* Main.storyboard */; };
+		E39B4AB620EFE0C2008CA6AF /* CurrentOrderListItemTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A8F20EFE0C2008CA6AF /* CurrentOrderListItemTableCell.swift */; };
+		E39B4AB720EFE0C2008CA6AF /* POSDiscount.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A9120EFE0C2008CA6AF /* POSDiscount.swift */; };
+		E39B4AB820EFE0C2008CA6AF /* POSRefund.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A9220EFE0C2008CA6AF /* POSRefund.swift */; };
+		E39B4AB920EFE0C2008CA6AF /* POSOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A9320EFE0C2008CA6AF /* POSOrder.swift */; };
+		E39B4ABA20EFE0C2008CA6AF /* POSExchange.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A9420EFE0C2008CA6AF /* POSExchange.swift */; };
+		E39B4ABB20EFE0C2008CA6AF /* POSStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A9520EFE0C2008CA6AF /* POSStore.swift */; };
+		E39B4ABC20EFE0C2008CA6AF /* POSOrderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A9620EFE0C2008CA6AF /* POSOrderItem.swift */; };
+		E39B4ABD20EFE0C2008CA6AF /* POSNakedRefund.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A9720EFE0C2008CA6AF /* POSNakedRefund.swift */; };
+		E39B4ABE20EFE0C2008CA6AF /* POSCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A9820EFE0C2008CA6AF /* POSCard.swift */; };
+		E39B4ABF20EFE0C2008CA6AF /* POSPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A9920EFE0C2008CA6AF /* POSPayment.swift */; };
+		E39B4AC020EFE0C2008CA6AF /* POSLineItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A9A20EFE0C2008CA6AF /* POSLineItem.swift */; };
+		E39B4AC120EFE0C2008CA6AF /* POSItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A9B20EFE0C2008CA6AF /* POSItem.swift */; };
+		E39B4AC320EFE0C2008CA6AF /* AvailableItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A9D20EFE0C2008CA6AF /* AvailableItemCollectionViewCell.swift */; };
+		E39B4AC420EFE0C2008CA6AF /* PrintTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A9E20EFE0C2008CA6AF /* PrintTestViewController.swift */; };
+		E39B4AC620EFE0C2008CA6AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4AA020EFE0C2008CA6AF /* AppDelegate.swift */; };
+		E39B4AC720EFE0C2008CA6AF /* BaseUISplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4AA120EFE0C2008CA6AF /* BaseUISplitViewController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7E00D8271DB47FAF00486F3D /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7EC6DF3A1D90474700D852EF /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		361A4341EC0FE78DA035DC1F /* Pods-CloverConnector iOS Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CloverConnector iOS Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-CloverConnector iOS Example/Pods-CloverConnector iOS Example.release.xcconfig"; sourceTree = "<group>"; };
+		607FACD01AFB9204008FA782 /* CloverConnector iOS Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CloverConnector iOS Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6DA2362BAF8C98B4434B6E03 /* Pods_CloverConnector_iOS_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CloverConnector_iOS_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		71752588147198EE313029DA /* Pods-CloverConnector iOS Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CloverConnector iOS Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CloverConnector iOS Example/Pods-CloverConnector iOS Example.debug.xcconfig"; sourceTree = "<group>"; };
+		E3614E51215E812C003F0758 /* LoyaltyTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyTestViewController.swift; sourceTree = "<group>"; };
+		E37E1D86218CF40E00F824F3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		E37E1D88218D052600F824F3 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		E39B4A7720EFE0C2008CA6AF /* PreAuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreAuthViewController.swift; sourceTree = "<group>"; };
+		E39B4A7820EFE0C2008CA6AF /* TabController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabController.swift; sourceTree = "<group>"; };
+		E39B4A7920EFE0C2008CA6AF /* ManualRefundViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManualRefundViewController.swift; sourceTree = "<group>"; };
+		E39B4A7A20EFE0C2008CA6AF /* MiscViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiscViewController.swift; sourceTree = "<group>"; };
+		E39B4A7B20EFE0C2008CA6AF /* SimpleTestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleTestViewController.swift; sourceTree = "<group>"; };
+		E39B4A7D20EFE0C2008CA6AF /* OrderDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderDetailsViewController.swift; sourceTree = "<group>"; };
+		E39B4A7E20EFE0C2008CA6AF /* OrdersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrdersTableViewController.swift; sourceTree = "<group>"; };
+		E39B4A7F20EFE0C2008CA6AF /* VaultCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VaultCardViewController.swift; sourceTree = "<group>"; };
+		E39B4A8020EFE0C2008CA6AF /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		E39B4A8120EFE0C2008CA6AF /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E39B4A8220EFE0C2008CA6AF /* SignatureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignatureView.swift; sourceTree = "<group>"; };
+		E39B4A8320EFE0C2008CA6AF /* UITestTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITestTableCell.swift; sourceTree = "<group>"; };
+		E39B4A8420EFE0C2008CA6AF /* CloverConnectorListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloverConnectorListener.swift; sourceTree = "<group>"; };
+		E39B4A8520EFE0C2008CA6AF /* SignatureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignatureViewController.swift; sourceTree = "<group>"; };
+		E39B4A8620EFE0C2008CA6AF /* CurrencyUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyUtils.swift; sourceTree = "<group>"; };
+		E39B4A8720EFE0C2008CA6AF /* AvailableItems.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AvailableItems.xib; sourceTree = "<group>"; };
+		E39B4A8A20EFE0C2008CA6AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E39B4A8C20EFE0C2008CA6AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E39B4A8E20EFE0C2008CA6AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E39B4A8F20EFE0C2008CA6AF /* CurrentOrderListItemTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentOrderListItemTableCell.swift; sourceTree = "<group>"; };
+		E39B4A9120EFE0C2008CA6AF /* POSDiscount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POSDiscount.swift; sourceTree = "<group>"; };
+		E39B4A9220EFE0C2008CA6AF /* POSRefund.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POSRefund.swift; sourceTree = "<group>"; };
+		E39B4A9320EFE0C2008CA6AF /* POSOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POSOrder.swift; sourceTree = "<group>"; };
+		E39B4A9420EFE0C2008CA6AF /* POSExchange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POSExchange.swift; sourceTree = "<group>"; };
+		E39B4A9520EFE0C2008CA6AF /* POSStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POSStore.swift; sourceTree = "<group>"; };
+		E39B4A9620EFE0C2008CA6AF /* POSOrderItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POSOrderItem.swift; sourceTree = "<group>"; };
+		E39B4A9720EFE0C2008CA6AF /* POSNakedRefund.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POSNakedRefund.swift; sourceTree = "<group>"; };
+		E39B4A9820EFE0C2008CA6AF /* POSCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POSCard.swift; sourceTree = "<group>"; };
+		E39B4A9920EFE0C2008CA6AF /* POSPayment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POSPayment.swift; sourceTree = "<group>"; };
+		E39B4A9A20EFE0C2008CA6AF /* POSLineItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POSLineItem.swift; sourceTree = "<group>"; };
+		E39B4A9B20EFE0C2008CA6AF /* POSItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POSItem.swift; sourceTree = "<group>"; };
+		E39B4A9D20EFE0C2008CA6AF /* AvailableItemCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvailableItemCollectionViewCell.swift; sourceTree = "<group>"; };
+		E39B4A9E20EFE0C2008CA6AF /* PrintTestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintTestViewController.swift; sourceTree = "<group>"; };
+		E39B4AA020EFE0C2008CA6AF /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E39B4AA120EFE0C2008CA6AF /* BaseUISplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseUISplitViewController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		607FACCD1AFB9204008FA782 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47A6A763F06D9BCC500DD2D1 /* Pods_CloverConnector_iOS_Example.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		42927818D15CB42408EC2EA3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				71752588147198EE313029DA /* Pods-CloverConnector iOS Example.debug.xcconfig */,
+				361A4341EC0FE78DA035DC1F /* Pods-CloverConnector iOS Example.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		607FACC71AFB9204008FA782 = {
+			isa = PBXGroup;
+			children = (
+				E37E1D88218D052600F824F3 /* LICENSE */,
+				E37E1D86218CF40E00F824F3 /* README.md */,
+				E39B4A7520EFE0C2008CA6AF /* Source */,
+				607FACD11AFB9204008FA782 /* Products */,
+				42927818D15CB42408EC2EA3 /* Pods */,
+				D58C6D7C6B2E8CE364280580 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		607FACD11AFB9204008FA782 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				607FACD01AFB9204008FA782 /* CloverConnector iOS Example.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D58C6D7C6B2E8CE364280580 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6DA2362BAF8C98B4434B6E03 /* Pods_CloverConnector_iOS_Example.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E39B4A7520EFE0C2008CA6AF /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				E39B4AA020EFE0C2008CA6AF /* AppDelegate.swift */,
+				E39B4A8A20EFE0C2008CA6AF /* Assets.xcassets */,
+				E3C7295420F68E3A00AA0D8E /* ui */,
+				E39B4A8620EFE0C2008CA6AF /* CurrencyUtils.swift */,
+				E39B4A8420EFE0C2008CA6AF /* CloverConnectorListener.swift */,
+				E39B4A9020EFE0C2008CA6AF /* model */,
+			);
+			name = Source;
+			path = "CloverConnector iOS Example/Source";
+			sourceTree = "<group>";
+		};
+		E39B4A7620EFE0C2008CA6AF /* tabs */ = {
+			isa = PBXGroup;
+			children = (
+				E39B4A7920EFE0C2008CA6AF /* ManualRefundViewController.swift */,
+				E39B4A7A20EFE0C2008CA6AF /* MiscViewController.swift */,
+				E39B4A7D20EFE0C2008CA6AF /* OrderDetailsViewController.swift */,
+				E39B4A7E20EFE0C2008CA6AF /* OrdersTableViewController.swift */,
+				E39B4A7720EFE0C2008CA6AF /* PreAuthViewController.swift */,
+				E39B4A8020EFE0C2008CA6AF /* RegisterViewController.swift */,
+				E39B4A7B20EFE0C2008CA6AF /* SimpleTestViewController.swift */,
+				E39B4A7820EFE0C2008CA6AF /* TabController.swift */,
+				E39B4A7F20EFE0C2008CA6AF /* VaultCardViewController.swift */,
+			);
+			path = tabs;
+			sourceTree = "<group>";
+		};
+		E39B4A9020EFE0C2008CA6AF /* model */ = {
+			isa = PBXGroup;
+			children = (
+				E39B4A9120EFE0C2008CA6AF /* POSDiscount.swift */,
+				E39B4A9220EFE0C2008CA6AF /* POSRefund.swift */,
+				E39B4A9320EFE0C2008CA6AF /* POSOrder.swift */,
+				E39B4A9420EFE0C2008CA6AF /* POSExchange.swift */,
+				E39B4A9520EFE0C2008CA6AF /* POSStore.swift */,
+				E39B4A9620EFE0C2008CA6AF /* POSOrderItem.swift */,
+				E39B4A9720EFE0C2008CA6AF /* POSNakedRefund.swift */,
+				E39B4A9820EFE0C2008CA6AF /* POSCard.swift */,
+				E39B4A9920EFE0C2008CA6AF /* POSPayment.swift */,
+				E39B4A9A20EFE0C2008CA6AF /* POSLineItem.swift */,
+				E39B4A9B20EFE0C2008CA6AF /* POSItem.swift */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		E3C7295420F68E3A00AA0D8E /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				E39B4A9D20EFE0C2008CA6AF /* AvailableItemCollectionViewCell.swift */,
+				E39B4AA120EFE0C2008CA6AF /* BaseUISplitViewController.swift */,
+				E39B4A8F20EFE0C2008CA6AF /* CurrentOrderListItemTableCell.swift */,
+				E39B4A9E20EFE0C2008CA6AF /* PrintTestViewController.swift */,
+				E39B4A8220EFE0C2008CA6AF /* SignatureView.swift */,
+				E39B4A8520EFE0C2008CA6AF /* SignatureViewController.swift */,
+				E39B4A8320EFE0C2008CA6AF /* UITestTableCell.swift */,
+				E39B4A8120EFE0C2008CA6AF /* ViewController.swift */,
+				E3614E51215E812C003F0758 /* LoyaltyTestViewController.swift */,
+				E39B4A8D20EFE0C2008CA6AF /* Main.storyboard */,
+				E39B4A8B20EFE0C2008CA6AF /* LaunchScreen.storyboard */,
+				E39B4A8720EFE0C2008CA6AF /* AvailableItems.xib */,
+				E39B4A7620EFE0C2008CA6AF /* tabs */,
+			);
+			path = ui;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		607FACCF1AFB9204008FA782 /* CloverConnector iOS Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "CloverConnector iOS Example" */;
+			buildPhases = (
+				451692A3AE9366D6EBAE9BB3 /* [CP] Check Pods Manifest.lock */,
+				607FACCC1AFB9204008FA782 /* Sources */,
+				607FACCD1AFB9204008FA782 /* Frameworks */,
+				607FACCE1AFB9204008FA782 /* Resources */,
+				A3BFB62B8451F330D0854C2B /* [CP] Embed Pods Frameworks */,
+				7EC6DF3A1D90474700D852EF /* Embed Frameworks */,
+				7E00D8271DB47FAF00486F3D /* Embed App Extensions */,
+				16DCF6396DC68C6003D1EB9C /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "CloverConnector iOS Example";
+			productName = CloverConnector;
+			productReference = 607FACD01AFB9204008FA782 /* CloverConnector iOS Example.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		607FACC81AFB9204008FA782 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0800;
+				LastUpgradeCheck = 0940;
+				ORGANIZATIONNAME = CocoaPods;
+				TargetAttributes = {
+					607FACCF1AFB9204008FA782 = {
+						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = Q993233M8T;
+						LastSwiftMigration = 1000;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "CloverConnector iOS Example" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 607FACC71AFB9204008FA782;
+			productRefGroup = 607FACD11AFB9204008FA782 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				607FACCF1AFB9204008FA782 /* CloverConnector iOS Example */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		607FACCE1AFB9204008FA782 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E39B4AB520EFE0C2008CA6AF /* Main.storyboard in Resources */,
+				E39B4AB320EFE0C2008CA6AF /* Assets.xcassets in Resources */,
+				E37E1D89218D052600F824F3 /* LICENSE in Resources */,
+				E37E1D87218CF40E00F824F3 /* README.md in Resources */,
+				E39B4AB220EFE0C2008CA6AF /* AvailableItems.xib in Resources */,
+				E39B4AB420EFE0C2008CA6AF /* LaunchScreen.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		16DCF6396DC68C6003D1EB9C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CloverConnector iOS Example/Pods-CloverConnector iOS Example-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		451692A3AE9366D6EBAE9BB3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CloverConnector iOS Example-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A3BFB62B8451F330D0854C2B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-CloverConnector iOS Example/Pods-CloverConnector iOS Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CloverConnector/CloverConnector.framework",
+				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
+				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CloverConnector.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CloverConnector iOS Example/Pods-CloverConnector iOS Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		607FACCC1AFB9204008FA782 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E39B4ABC20EFE0C2008CA6AF /* POSOrderItem.swift in Sources */,
+				E39B4AC020EFE0C2008CA6AF /* POSLineItem.swift in Sources */,
+				E39B4ABA20EFE0C2008CA6AF /* POSExchange.swift in Sources */,
+				E39B4AA620EFE0C2008CA6AF /* SimpleTestViewController.swift in Sources */,
+				E39B4ABD20EFE0C2008CA6AF /* POSNakedRefund.swift in Sources */,
+				E39B4AC120EFE0C2008CA6AF /* POSItem.swift in Sources */,
+				E39B4AB820EFE0C2008CA6AF /* POSRefund.swift in Sources */,
+				E3614E52215E812C003F0758 /* LoyaltyTestViewController.swift in Sources */,
+				E39B4AA520EFE0C2008CA6AF /* MiscViewController.swift in Sources */,
+				E39B4AAA20EFE0C2008CA6AF /* VaultCardViewController.swift in Sources */,
+				E39B4AB120EFE0C2008CA6AF /* CurrencyUtils.swift in Sources */,
+				E39B4AC320EFE0C2008CA6AF /* AvailableItemCollectionViewCell.swift in Sources */,
+				E39B4AC620EFE0C2008CA6AF /* AppDelegate.swift in Sources */,
+				E39B4AC720EFE0C2008CA6AF /* BaseUISplitViewController.swift in Sources */,
+				E39B4AAB20EFE0C2008CA6AF /* RegisterViewController.swift in Sources */,
+				E39B4AC420EFE0C2008CA6AF /* PrintTestViewController.swift in Sources */,
+				E39B4ABF20EFE0C2008CA6AF /* POSPayment.swift in Sources */,
+				E39B4AB620EFE0C2008CA6AF /* CurrentOrderListItemTableCell.swift in Sources */,
+				E39B4AAC20EFE0C2008CA6AF /* ViewController.swift in Sources */,
+				E39B4AA320EFE0C2008CA6AF /* TabController.swift in Sources */,
+				E39B4AB920EFE0C2008CA6AF /* POSOrder.swift in Sources */,
+				E39B4ABE20EFE0C2008CA6AF /* POSCard.swift in Sources */,
+				E39B4AA820EFE0C2008CA6AF /* OrderDetailsViewController.swift in Sources */,
+				E39B4AAF20EFE0C2008CA6AF /* CloverConnectorListener.swift in Sources */,
+				E39B4AB720EFE0C2008CA6AF /* POSDiscount.swift in Sources */,
+				E39B4AAD20EFE0C2008CA6AF /* SignatureView.swift in Sources */,
+				E39B4AAE20EFE0C2008CA6AF /* UITestTableCell.swift in Sources */,
+				E39B4ABB20EFE0C2008CA6AF /* POSStore.swift in Sources */,
+				E39B4AA220EFE0C2008CA6AF /* PreAuthViewController.swift in Sources */,
+				E39B4AA920EFE0C2008CA6AF /* OrdersTableViewController.swift in Sources */,
+				E39B4AB020EFE0C2008CA6AF /* SignatureViewController.swift in Sources */,
+				E39B4AA420EFE0C2008CA6AF /* ManualRefundViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		E39B4A8B20EFE0C2008CA6AF /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E39B4A8C20EFE0C2008CA6AF /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		E39B4A8D20EFE0C2008CA6AF /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E39B4A8E20EFE0C2008CA6AF /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		607FACED1AFB9204008FA782 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		607FACEE1AFB9204008FA782 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		607FACF01AFB9204008FA782 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 71752588147198EE313029DA /* Pods-CloverConnector iOS Example.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = Q993233M8T;
+				INFOPLIST_FILE = "CloverConnector iOS Example/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MODULE_NAME = ExampleApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.clover.CloverConnectorExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		607FACF11AFB9204008FA782 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 361A4341EC0FE78DA035DC1F /* Pods-CloverConnector iOS Example.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = Q993233M8T;
+				INFOPLIST_FILE = "CloverConnector iOS Example/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MODULE_NAME = ExampleApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.clover.CloverConnectorExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "CloverConnector iOS Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				607FACED1AFB9204008FA782 /* Debug */,
+				607FACEE1AFB9204008FA782 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "CloverConnector iOS Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				607FACF01AFB9204008FA782 /* Debug */,
+				607FACF11AFB9204008FA782 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 607FACC81AFB9204008FA782 /* Project object */;
+}
