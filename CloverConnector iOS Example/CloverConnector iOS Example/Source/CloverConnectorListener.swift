@@ -32,9 +32,7 @@ public class CloverConnectorListener : NSObject, ICloverConnectorListener, UIAle
         self.cloverConnector = cloverConnector
     }
     
-    fileprivate var store:POSStore? {
-        return (UIApplication.shared.delegate as? AppDelegate)?.store
-    }
+    fileprivate var store = POSStore.shared
     
     // MARK: - User Messaging
 
@@ -126,9 +124,8 @@ public class CloverConnectorListener : NSObject, ICloverConnectorListener, UIAle
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             if response.success {
-                if let store = self.store {
                     if let payment = response.payment,
-                        let order = store.currentOrder,
+                        let order = self.store.currentOrder,
                         let paymentId = payment.id,
                         let orderId = payment.order?.id,
                         let paymentAmount = payment.amount {
@@ -139,8 +136,8 @@ public class CloverConnectorListener : NSObject, ICloverConnectorListener, UIAle
                         posPayment.status = response.isSale ? PaymentStatus.PAID : (response.isAuth ? PaymentStatus.AUTHORIZED : (response.isPreAuth ? PaymentStatus.PREAUTHORIZED : PaymentStatus.UNKNOWN))
                         
                         if response.isSale || response.isAuth {
-                            store.addPaymentToOrder(posPayment, order: order)
-                            store.newOrder()
+                            self.store.addPaymentToOrder(posPayment, order: order)
+                            self.store.newOrder()
                             
                             var expectedResponseId = true
                             if order.pendingPaymentId != payment.externalPaymentId {
@@ -162,8 +159,8 @@ public class CloverConnectorListener : NSObject, ICloverConnectorListener, UIAle
                             }
                             self.cloverConnector?.showWelcomeScreen()
                         } else if response.isPreAuth {
-                            store.addPreAuth(posPayment)
-                            store.newOrder()
+                            self.store.addPreAuth(posPayment)
+                            self.store.newOrder()
                             if payment.externalPaymentId != nil && payment.externalPaymentId! == self.preAuthExpectedResponseId {
                                 self.showMessage("Sale proccessed as Pre-Auth successful")
                             } else {
@@ -172,7 +169,6 @@ public class CloverConnectorListener : NSObject, ICloverConnectorListener, UIAle
                             self.preAuthExpectedResponseId = nil
                         }
                     }
-                }
             } else {
                 if response.result == .CANCEL {
                     self.showMessage("Sale Canceled")
@@ -192,51 +188,49 @@ public class CloverConnectorListener : NSObject, ICloverConnectorListener, UIAle
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             if authResponse.success {
-                if let store = self.store {
-                    if let payment = authResponse.payment,
-                        let order = store.currentOrder,
-                        let paymentId = payment.id,
-                        let orderId = payment.order?.id,
-                        let paymentAmount = payment.amount {
-                        let tipAmount = payment.tipAmount ?? 0
-                        let cashback = payment.cashbackAmount ?? 0
-                        let posPayment:POSPayment = POSPayment(paymentId: paymentId, externalPaymentId: payment.externalPaymentId, orderId: orderId, employeeId: "DFLTEMPLYEE", amount: paymentAmount, tipAmount: tipAmount, cashbackAmount: cashback, last4: payment.cardTransaction?.last4, name: payment.cardTransaction?.cardholderName)
+                if let payment = authResponse.payment,
+                    let order = self.store.currentOrder,
+                    let paymentId = payment.id,
+                    let orderId = payment.order?.id,
+                    let paymentAmount = payment.amount {
+                    let tipAmount = payment.tipAmount ?? 0
+                    let cashback = payment.cashbackAmount ?? 0
+                    let posPayment:POSPayment = POSPayment(paymentId: paymentId, externalPaymentId: payment.externalPaymentId, orderId: orderId, employeeId: "DFLTEMPLYEE", amount: paymentAmount, tipAmount: tipAmount, cashbackAmount: cashback, last4: payment.cardTransaction?.last4, name: payment.cardTransaction?.cardholderName)
+                    
+                    posPayment.status = authResponse.isSale ? PaymentStatus.PAID : (authResponse.isAuth ? PaymentStatus.AUTHORIZED : (authResponse.isPreAuth ? PaymentStatus.PREAUTHORIZED : PaymentStatus.UNKNOWN))
+                    
+                    if authResponse.isSale || authResponse.isAuth {
+                        self.store.addPaymentToOrder(posPayment, order: order)
+                        self.store.newOrder()
                         
-                        posPayment.status = authResponse.isSale ? PaymentStatus.PAID : (authResponse.isAuth ? PaymentStatus.AUTHORIZED : (authResponse.isPreAuth ? PaymentStatus.PREAUTHORIZED : PaymentStatus.UNKNOWN))
-                        
-                        if authResponse.isSale || authResponse.isAuth {
-                            store.addPaymentToOrder(posPayment, order: order)
-                            store.newOrder()
-    
-                            var expectedResponseId = true
-                            if order.pendingPaymentId != payment.externalPaymentId {
-                                expectedResponseId = false
-                            }
-                            
-                            if authResponse.isSale {
-                                if expectedResponseId {
-                                    self.showMessage("Auth successfully processed as Sale")
-                                } else {
-                                    self.showMessage("Auth proccessed as Sale, with unexpected payment id")
-                                }
-                            } else if authResponse.isAuth {
-                                if expectedResponseId {
-                                    self.showMessage("Auth successfully processed")  // Happy Path
-                                } else {
-                                    self.showMessage("Auth successful, but unexpected payment id")
-                                }
-                            }
-                            self.cloverConnector?.showWelcomeScreen()
-                        } else if authResponse.isPreAuth {
-                            store.addPreAuth(posPayment)
-                            store.newOrder()
-                            if payment.externalPaymentId != nil && payment.externalPaymentId! == self.preAuthExpectedResponseId {
-                                self.showMessage("Auth proccessed as Pre-Auth successful")
-                            } else {
-                                self.showMessage("Auth proccessed as Pre-Auth, with unexpected payment id")
-                            }
-                            self.preAuthExpectedResponseId = nil
+                        var expectedResponseId = true
+                        if order.pendingPaymentId != payment.externalPaymentId {
+                            expectedResponseId = false
                         }
+                        
+                        if authResponse.isSale {
+                            if expectedResponseId {
+                                self.showMessage("Auth successfully processed as Sale")
+                            } else {
+                                self.showMessage("Auth proccessed as Sale, with unexpected payment id")
+                            }
+                        } else if authResponse.isAuth {
+                            if expectedResponseId {
+                                self.showMessage("Auth successfully processed")  // Happy Path
+                            } else {
+                                self.showMessage("Auth successful, but unexpected payment id")
+                            }
+                        }
+                        self.cloverConnector?.showWelcomeScreen()
+                    } else if authResponse.isPreAuth {
+                        self.store.addPreAuth(posPayment)
+                        self.store.newOrder()
+                        if payment.externalPaymentId != nil && payment.externalPaymentId! == self.preAuthExpectedResponseId {
+                            self.showMessage("Auth proccessed as Pre-Auth successful")
+                        } else {
+                            self.showMessage("Auth proccessed as Pre-Auth, with unexpected payment id")
+                        }
+                        self.preAuthExpectedResponseId = nil
                     }
                 }
             } else {
@@ -258,45 +252,43 @@ public class CloverConnectorListener : NSObject, ICloverConnectorListener, UIAle
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             if preAuthResponse.success {
-                if let store = self.store {
-                    if let payment = preAuthResponse.payment,
-                        let order = store.currentOrder,
-                        let paymentId = payment.id,
-                        let orderId = payment.order?.id,
-                        let paymentAmount = payment.amount {
-                        let posPayment:POSPayment = POSPayment(paymentId: paymentId, externalPaymentId: payment.externalPaymentId, orderId: orderId, employeeId: "DFLTEMPLYEE", amount: paymentAmount, tipAmount: payment.tipAmount ?? 0, cashbackAmount: payment.cashbackAmount ?? 0, last4: payment.cardTransaction?.last4, name: payment.cardTransaction?.cardholderName)
+                if let payment = preAuthResponse.payment,
+                    let order = self.store.currentOrder,
+                    let paymentId = payment.id,
+                    let orderId = payment.order?.id,
+                    let paymentAmount = payment.amount {
+                    let posPayment:POSPayment = POSPayment(paymentId: paymentId, externalPaymentId: payment.externalPaymentId, orderId: orderId, employeeId: "DFLTEMPLYEE", amount: paymentAmount, tipAmount: payment.tipAmount ?? 0, cashbackAmount: payment.cashbackAmount ?? 0, last4: payment.cardTransaction?.last4, name: payment.cardTransaction?.cardholderName)
+                    
+                    if preAuthResponse.isSale || preAuthResponse.isAuth {
+                        self.store.addPaymentToOrder(posPayment, order: order)
                         
-                        if preAuthResponse.isSale || preAuthResponse.isAuth {
-                            store.addPaymentToOrder(posPayment, order: order)
-                            
-                            var expectedResponseId = true
-                            if order.pendingPaymentId != payment.externalPaymentId {
-                                expectedResponseId = false
-                            }
-                            
-                            if preAuthResponse.isSale {
-                                if expectedResponseId {
-                                    self.showMessage("PreAuth successfully processed as Sale")
-                                } else {
-                                    self.showMessage("PreAuth proccessed as Sale, with unexpected payment id")
-                                }
-                            } else if preAuthResponse.isAuth {
-                                if expectedResponseId {
-                                    self.showMessage("PreAuth successfully processed as Auth")
-                                } else {
-                                    self.showMessage("PreAuth processed as Auth, with unexpected payment id")
-                                }
-                            }
-                            self.cloverConnector?.showWelcomeScreen()
-                        } else if preAuthResponse.isPreAuth {
-                            store.addPreAuth(posPayment)
-                            if payment.externalPaymentId != nil && payment.externalPaymentId! == self.preAuthExpectedResponseId {
-                                self.showMessage("PreAuth successfully proccessed")  // Happy Path
-                            } else {
-                                self.showMessage("PreAuth processed, but with unexpected payment id")
-                            }
-                            self.preAuthExpectedResponseId = nil
+                        var expectedResponseId = true
+                        if order.pendingPaymentId != payment.externalPaymentId {
+                            expectedResponseId = false
                         }
+                        
+                        if preAuthResponse.isSale {
+                            if expectedResponseId {
+                                self.showMessage("PreAuth successfully processed as Sale")
+                            } else {
+                                self.showMessage("PreAuth proccessed as Sale, with unexpected payment id")
+                            }
+                        } else if preAuthResponse.isAuth {
+                            if expectedResponseId {
+                                self.showMessage("PreAuth successfully processed as Auth")
+                            } else {
+                                self.showMessage("PreAuth processed as Auth, with unexpected payment id")
+                            }
+                        }
+                        self.cloverConnector?.showWelcomeScreen()
+                    } else if preAuthResponse.isPreAuth {
+                        self.store.addPreAuth(posPayment)
+                        if payment.externalPaymentId != nil && payment.externalPaymentId! == self.preAuthExpectedResponseId {
+                            self.showMessage("PreAuth successfully proccessed")  // Happy Path
+                        } else {
+                            self.showMessage("PreAuth processed, but with unexpected payment id")
+                        }
+                        self.preAuthExpectedResponseId = nil
                     }
                 }
             } else {
@@ -324,11 +316,7 @@ public class CloverConnectorListener : NSObject, ICloverConnectorListener, UIAle
                 self.showMessage("PreAuth Capture Error: Payment failed with response code = " + responseResult + " and reason: " + responseReason)
                 return
             }
-            guard let store = self.store else {
-                self.showMessage("Couldn't get store!")
-                return
-            }
-            guard let currentOrder = store.currentOrder else {
+            guard let currentOrder = self.store.currentOrder else {
                 self.showMessage("No Current Order!")
                 return
             }
@@ -338,22 +326,22 @@ public class CloverConnectorListener : NSObject, ICloverConnectorListener, UIAle
             }
             
             // find the preauth in our records
-            guard let payment = store.preAuths.first( where: {$0.paymentId == response.paymentId }) else {
+            guard let payment = self.store.preAuths.first( where: {$0.paymentId == response.paymentId }) else {
                 self.showMessage("Received PreAuth Capture for a PreAuth Not On Record")
                 return
             }
 
             // remove the preAuth from the active preauth records
-            store.removePreAuth(payment)
+            self.store.removePreAuth(payment)
             // add the payment to the order, set the status, and set the amount to the captured amount
-            store.addPaymentToOrder(payment, order: currentOrder)
+            self.store.addPaymentToOrder(payment, order: currentOrder)
             payment.status = PaymentStatus.AUTHORIZED
             payment.amount = responseAmount
             
             self.showMessage("Sale successful processing using Pre Authorization")
             
             // clear the order
-            store.newOrder()
+            self.store.newOrder()
             self.cloverConnector?.showWelcomeScreen()
             
         }
@@ -367,21 +355,19 @@ public class CloverConnectorListener : NSObject, ICloverConnectorListener, UIAle
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             if response.success {
-                if let store = self.store {
-                    var updatedTip = false
-                    for order in store.orders {
-                        for exchange in order.payments {
-                            if exchange.paymentId == response.paymentId {
-                                exchange.tipAmount = response.tipAmount
-                                updatedTip = true;
-                                // TODO: update the table
-                                break;
-                            }
+                var updatedTip = false
+                for order in self.store.orders {
+                    for exchange in order.payments {
+                        if exchange.paymentId == response.paymentId {
+                            exchange.tipAmount = response.tipAmount
+                            updatedTip = true;
+                            // TODO: update the table
+                            break;
                         }
                     }
-                    if (updatedTip) {
-                        self.showMessage("Tip successfully adjusted")
-                    }
+                }
+                if (updatedTip) {
+                    self.showMessage("Tip successfully adjusted")
                 }
             } else {
                 self.showMessage("Tip adjust failed")
@@ -398,19 +384,17 @@ public class CloverConnectorListener : NSObject, ICloverConnectorListener, UIAle
             guard let self = self else { return }
             if response.success {
                 var done = false;
-                if let store = self.store {
-                    for order in store.orders {
-                        for payment in order.payments {
-                            if payment.paymentId == response.paymentId {
-                                payment.status = .VOIDED
-                                self.showMessage("Payment was voided")
-                                done = true;
-                                break;
-                            }
-                        }
-                        if (done) {
+                for order in self.store.orders {
+                    for payment in order.payments {
+                        if payment.paymentId == response.paymentId {
+                            payment.status = .VOIDED
+                            self.showMessage("Payment was voided")
+                            done = true;
                             break;
                         }
+                    }
+                    if (done) {
+                        break;
                     }
                 }
             } else {
@@ -428,13 +412,11 @@ public class CloverConnectorListener : NSObject, ICloverConnectorListener, UIAle
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             if manualRefundResponse.success {
-                if let store = self.store {
-                    if let amt = manualRefundResponse.credit?.amount {
-                        let nakedRefund = POSNakedRefund(employeeId:"DFLTEMPLYE", amount: amt)
-                        store.addManualRefund(nakedRefund)
-                        self.showMessage("Manual Refund Successfully Processed")
-                        self.cloverConnector?.showWelcomeScreen()
-                    }
+                if let amt = manualRefundResponse.credit?.amount {
+                    let nakedRefund = POSNakedRefund(employeeId:"DFLTEMPLYE", amount: amt)
+                    self.store.addManualRefund(nakedRefund)
+                    self.showMessage("Manual Refund Successfully Processed")
+                    self.cloverConnector?.showWelcomeScreen()
                 }
             } else {
                 if manualRefundResponse.result == .CANCEL {
@@ -501,9 +483,8 @@ public class CloverConnectorListener : NSObject, ICloverConnectorListener, UIAle
             guard let self = self else { return }
             if response.success {
                 if let vaultedCard = response.card,
-                    let vaultedPOScard = POSCard(card: vaultedCard),
-                    let store = self.store {
-                    store.addVaultedCard(vaultedPOScard)
+                    let vaultedPOScard = POSCard(card: vaultedCard) {
+                    self.store.addVaultedCard(vaultedPOScard)
                     self.showMessage("Card successfully vaulted")
                 } else {
                     self.showMessage("Error with card data")
@@ -628,8 +609,8 @@ public class CloverConnectorListener : NSObject, ICloverConnectorListener, UIAle
             guard let self = self else { return }
             if refundPaymentResponse.success {
                 self.showMessage("Refund successful")
-                for o in self.store?.orders ?? [] {
-                    for p in o.payments {
+                for order in self.store.orders {
+                    for p in order.payments {
                         if p.paymentId == refundPaymentResponse.paymentId {
                             guard let refundId = refundPaymentResponse.refund?.id,
                                 let paymentId = refundPaymentResponse.paymentId,
@@ -637,12 +618,16 @@ public class CloverConnectorListener : NSObject, ICloverConnectorListener, UIAle
                                 let refundAmt = refundPaymentResponse.refund?.amount else { return }
                             p.status = .REFUNDED
                             let refund = POSRefund(refundId: refundId, paymentId: paymentId, orderID: orderId, employeeId: "DFLTEMPLE", amount: refundAmt)
-                            self.store?.addRefundToOrder(refund, order: o )
+                            self.store.addRefundToOrder(refund, order: order )
                         }
                     }
                 }
             } else {
-                self.showMessage("Refund failed.")
+                if let failureMessage = refundPaymentResponse.message {
+                    self.showMessage(failureMessage, duration: 5)
+                } else {
+                    self.showMessage("Refund failed.")
+                }
             }
         }
     }
@@ -673,6 +658,10 @@ public class CloverConnectorListener : NSObject, ICloverConnectorListener, UIAle
     
     public func onPrintManualRefundDeclineReceipt(_ printManualRefundDeclineReceiptMessage: PrintManualRefundDeclineReceiptMessage) {
         showMessage("Print Manual Refund Decline Receipt: " + formatCurrency(printManualRefundDeclineReceiptMessage.credit?.amount))
+    }
+    
+    public func onDisplayReceiptOptionsResponse(_ response: DisplayReceiptOptionsResponse) {
+        showMessage("Display receipt options: \(String(describing: response.resultStatus?.rawValue))")
     }
     
     public func onRetrievePrintersResponse(_ retrievePrintersResponse: RetrievePrintersResponse) {
@@ -794,6 +783,8 @@ public class CloverConnectorListener : NSObject, ICloverConnectorListener, UIAle
         CCLog.d("Received Customer Provided Data Event")
         CCLog.d("\(event.data ?? "")")
     }
+    
+    
 }
 
 

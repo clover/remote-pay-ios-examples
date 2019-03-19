@@ -14,13 +14,7 @@ public class VaultCardViewController:UIViewController, UITableViewDataSource, UI
 {
     
     @IBOutlet weak var tableView: UITableView!
-    
-    fileprivate func getStore() -> POSStore? {
-        if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
-            return appDelegate.store
-        }
-        return nil
-    }
+    let store = POSStore.shared
     
     public override func viewDidLoad() {
     }
@@ -30,15 +24,15 @@ public class VaultCardViewController:UIViewController, UITableViewDataSource, UI
     }
     
     override public func viewDidAppear(_ animated: Bool) {
-        getStore()?.addStoreListener(self)
+        store.addStoreListener(self)
     }
     
     override public func viewDidDisappear(_ animated: Bool) {
-        getStore()?.removeStoreListener(self)
+        store.removeStoreListener(self)
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return getStore()?.vaultedCards.count ?? 0
+        return store.vaultedCards.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -49,9 +43,8 @@ public class VaultCardViewController:UIViewController, UITableViewDataSource, UI
             cell = UITableViewCell(style: UITableViewCell.CellStyle.value1, reuseIdentifier: "VCCell")
         }
         
-        if let vals = getStore()?.vaultedCards,
-            indexPath.row < vals.count {
-            
+        let vals = store.vaultedCards
+        if indexPath.row < vals.count { 
             let card = vals[indexPath.row]
             
             cell?.textLabel?.text = (card.first6) + "-XXXXXX-" + (card.last4)
@@ -67,7 +60,6 @@ public class VaultCardViewController:UIViewController, UITableViewDataSource, UI
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        guard let store = (UIApplication.shared.delegate as? AppDelegate)?.store else { return }
         guard let cloverConnector = (UIApplication.shared.delegate as? AppDelegate)?.cloverConnector else { return }
         guard let currentOrder = store.currentOrder else { return }
         guard indexPath.row < store.vaultedCards.count else { return }
@@ -80,26 +72,26 @@ public class VaultCardViewController:UIViewController, UITableViewDataSource, UI
                 let saleRequest = SaleRequest(amount: currentOrder.getTotal(), externalId: currentOrder.pendingPaymentId!)
                 saleRequest.vaultedCard = vaultedPOSCard.vaultedCard
                 // below are all optional
-                saleRequest.allowOfflinePayment = store.transactionSettings.allowOfflinePayment
-                saleRequest.approveOfflinePaymentWithoutPrompt = store.transactionSettings.approveOfflinePaymentWithoutPrompt
-                saleRequest.autoAcceptSignature = store.transactionSettings.autoAcceptSignature
-                saleRequest.autoAcceptPaymentConfirmations = store.transactionSettings.autoAcceptPaymentConfirmations
-                saleRequest.cardEntryMethods = store.transactionSettings.cardEntryMethods ?? cloverConnector.CARD_ENTRY_METHODS_DEFAULT
-                saleRequest.disableCashback = store.transactionSettings.disableCashBack
-                saleRequest.disableDuplicateChecking = store.transactionSettings.disableDuplicateCheck
-                if let enablePrinting = store.transactionSettings.cloverShouldHandleReceipts {
+                saleRequest.allowOfflinePayment = self.store.transactionSettings.allowOfflinePayment
+                saleRequest.approveOfflinePaymentWithoutPrompt = self.store.transactionSettings.approveOfflinePaymentWithoutPrompt
+                saleRequest.autoAcceptSignature = self.store.transactionSettings.autoAcceptSignature
+                saleRequest.autoAcceptPaymentConfirmations = self.store.transactionSettings.autoAcceptPaymentConfirmations
+                saleRequest.cardEntryMethods = self.store.transactionSettings.cardEntryMethods ?? cloverConnector.CARD_ENTRY_METHODS_DEFAULT
+                saleRequest.disableCashback = self.store.transactionSettings.disableCashBack
+                saleRequest.disableDuplicateChecking = self.store.transactionSettings.disableDuplicateCheck
+                if let enablePrinting = self.store.transactionSettings.cloverShouldHandleReceipts {
                     saleRequest.disablePrinting = !enablePrinting
                 }
-                saleRequest.disableReceiptSelection = store.transactionSettings.disableReceiptSelection
-                saleRequest.disableRestartTransactionOnFail = store.transactionSettings.disableRestartTransactionOnFailure
+                saleRequest.disableReceiptSelection = self.store.transactionSettings.disableReceiptSelection
+                saleRequest.disableRestartTransactionOnFail = self.store.transactionSettings.disableRestartTransactionOnFailure
                 
-                if let txTipModeString = store.transactionSettings.tipMode?.rawValue,
+                if let txTipModeString = self.store.transactionSettings.tipMode?.rawValue,
                     let srTipMode = SaleRequest.TipMode(rawValue: txTipModeString) {
                     saleRequest.tipMode = srTipMode
                 }
                 
-                saleRequest.forceOfflinePayment = store.transactionSettings.forceOfflinePayment
-                saleRequest.cardNotPresent = store.cardNotPresent
+                saleRequest.forceOfflinePayment = self.store.transactionSettings.forceOfflinePayment
+                saleRequest.cardNotPresent = self.store.cardNotPresent
                 
                 saleRequest.tipAmount = nil
                 saleRequest.tippableAmount = currentOrder.getTippableAmount()
@@ -112,34 +104,34 @@ public class VaultCardViewController:UIViewController, UITableViewDataSource, UI
                 let authRequest = AuthRequest(amount: currentOrder.getTotal(), externalId: currentOrder.pendingPaymentId!)
                 authRequest.vaultedCard = vaultedPOSCard.vaultedCard
                 // below are all optional
-                authRequest.allowOfflinePayment = store.transactionSettings.allowOfflinePayment
-                authRequest.approveOfflinePaymentWithoutPrompt = store.transactionSettings.approveOfflinePaymentWithoutPrompt
-                authRequest.autoAcceptSignature = store.transactionSettings.autoAcceptSignature
-                authRequest.autoAcceptPaymentConfirmations = store.transactionSettings.autoAcceptPaymentConfirmations
-                authRequest.cardEntryMethods = store.transactionSettings.cardEntryMethods ?? cloverConnector.CARD_ENTRY_METHODS_DEFAULT
-                authRequest.disableCashback = store.transactionSettings.disableCashBack
-                authRequest.disableDuplicateChecking = store.transactionSettings.disableDuplicateCheck
-                if let enablePrinting = store.transactionSettings.cloverShouldHandleReceipts {
+                authRequest.allowOfflinePayment = self.store.transactionSettings.allowOfflinePayment
+                authRequest.approveOfflinePaymentWithoutPrompt = self.store.transactionSettings.approveOfflinePaymentWithoutPrompt
+                authRequest.autoAcceptSignature = self.store.transactionSettings.autoAcceptSignature
+                authRequest.autoAcceptPaymentConfirmations = self.store.transactionSettings.autoAcceptPaymentConfirmations
+                authRequest.cardEntryMethods = self.store.transactionSettings.cardEntryMethods ?? cloverConnector.CARD_ENTRY_METHODS_DEFAULT
+                authRequest.disableCashback = self.store.transactionSettings.disableCashBack
+                authRequest.disableDuplicateChecking = self.store.transactionSettings.disableDuplicateCheck
+                if let enablePrinting = self.store.transactionSettings.cloverShouldHandleReceipts {
                     authRequest.disablePrinting = !enablePrinting
                 }
-                authRequest.disableReceiptSelection = store.transactionSettings.disableReceiptSelection
-                authRequest.disableRestartTransactionOnFail = store.transactionSettings.disableRestartTransactionOnFailure
+                authRequest.disableReceiptSelection = self.store.transactionSettings.disableReceiptSelection
+                authRequest.disableRestartTransactionOnFail = self.store.transactionSettings.disableRestartTransactionOnFailure
                 
-                authRequest.forceOfflinePayment = store.transactionSettings.forceOfflinePayment
-                authRequest.cardNotPresent = store.cardNotPresent
+                authRequest.forceOfflinePayment = self.store.transactionSettings.forceOfflinePayment
+                authRequest.cardNotPresent = self.store.cardNotPresent
                 
                 authRequest.tippableAmount = currentOrder.getTippableAmount()
                 
                 cloverConnector.auth(authRequest)
             }))
             alert.addAction(UIAlertAction(title: "Delete Vaulted Card", style: .destructive, handler: { action in
-                store.removeValutedCard(vaultedPOSCard)
+                self.store.removeValutedCard(vaultedPOSCard)
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         } else {
             alert.message = "Please create an order to apply to this Vaulted Card in the Register."
             alert.addAction(UIAlertAction(title: "Delete Vaulted Card", style: .destructive, handler: { action in
-                store.removeValutedCard(vaultedPOSCard)
+                self.store.removeValutedCard(vaultedPOSCard)
             }))
             alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         }

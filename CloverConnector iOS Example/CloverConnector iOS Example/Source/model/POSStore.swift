@@ -10,6 +10,9 @@ import Foundation
 import CloverConnector
 
 public class POSStore {
+    //setup as a singleton so we don't deal with multiple instances of the store and transaction settings
+    static let shared = POSStore()
+    
     public var orders = [POSOrder]()
     public var currentOrder:POSOrder? = nil
     public var availableItems = [POSItem]()
@@ -43,10 +46,11 @@ public class POSStore {
         
     }
     
-    init() {
-
-        newOrder()
+    //make the init private so that we can only have one instance
+    private init() {
         self.transactionSettings.cardEntryMethods = (UIApplication.shared.delegate as? AppDelegate)?.cloverConnector?.CARD_ENTRY_METHODS_DEFAULT
+        
+        newOrder()
     }
     
     public func addStoreListener(_ listener:POSStoreListener) {

@@ -40,11 +40,7 @@ class SimpleTestViewController : UITableViewController {
         }
     }
     
-    fileprivate var store:POSStore? {
-        get {
-            return (UIApplication.shared.delegate as? AppDelegate)?.store
-        }
-    }
+    fileprivate var store = POSStore.shared 
     
     fileprivate var _id = 0
     fileprivate var id : Int {
@@ -80,8 +76,8 @@ class SimpleTestViewController : UITableViewController {
     }
     
     func updateUIFromSettings() {
-        if let tx = store?.transactionSettings,
-            let cloverConnector = (UIApplication.shared.delegate as? AppDelegate)?.cloverConnector {
+        let tx = store.transactionSettings
+        if let cloverConnector = (UIApplication.shared.delegate as? AppDelegate)?.cloverConnector {
             allowOffline.selectedSegmentIndex = tx.allowOfflinePayment == nil ? 0 : (tx.allowOfflinePayment! ? 1 : 2)
             acceptOfflineWOPrompt.selectedSegmentIndex = (tx.approveOfflinePaymentWithoutPrompt == nil ? 0 : (tx.approveOfflinePaymentWithoutPrompt! ? 1 : 2))
             autoAcceptPayments.selectedSegmentIndex = tx.autoAcceptPaymentConfirmations == nil ? 0 : (tx.autoAcceptPaymentConfirmations! ? 1 : 2)
@@ -97,9 +93,7 @@ class SimpleTestViewController : UITableViewController {
             chipSwitch.isOn = ((tx.cardEntryMethods ?? 0) & cloverConnector.CARD_ENTRY_METHOD_ICC_CONTACT) == cloverConnector.CARD_ENTRY_METHOD_ICC_CONTACT
             nfcSwitch.isOn = ((tx.cardEntryMethods ?? 0) & cloverConnector.CARD_ENTRY_METHOD_NFC_CONTACTLESS) == cloverConnector.CARD_ENTRY_METHOD_NFC_CONTACTLESS
             
-            if let store = store {
-                cardNotPresent.selectedSegmentIndex = store.cardNotPresent == nil ? 0 : (store.cardNotPresent! ? 1 : 2)
-            }
+            cardNotPresent.selectedSegmentIndex = store.cardNotPresent == nil ? 0 : (store.cardNotPresent! ? 1 : 2)
             
             if tx.signatureEntryLocation == CLVModels.Payments.DataEntryLocation.ON_SCREEN {
                 sigLocation.selectedSegmentIndex = 1
@@ -128,8 +122,7 @@ class SimpleTestViewController : UITableViewController {
     @IBAction func loadSettingsFromUI(_ sender:AnyObject) {
         guard let cloverConnector = cloverConnector else { return }
         
-//        let txSettings = CLVModels.Payments.TransactionSettings()
-        let txSettings = store?.transactionSettings ?? CLVModels.Payments.TransactionSettings()
+        let txSettings = store.transactionSettings
         txSettings.allowOfflinePayment = allowOffline.selectedSegmentIndex == 0 ? nil : (allowOffline.selectedSegmentIndex == 1 ? true : false)
         txSettings.approveOfflinePaymentWithoutPrompt = acceptOfflineWOPrompt.selectedSegmentIndex == 0 ? nil : (acceptOfflineWOPrompt.selectedSegmentIndex == 1 ? true : false)
         txSettings.autoAcceptPaymentConfirmations = autoAcceptPayments.selectedSegmentIndex == 0 ? nil : (autoAcceptPayments.selectedSegmentIndex == 1 ? true : false)
@@ -140,9 +133,7 @@ class SimpleTestViewController : UITableViewController {
         txSettings.disableReceiptSelection = disableReceiptScreen.selectedSegmentIndex == 0 ? nil : (disableReceiptScreen.selectedSegmentIndex == 1 ? true : false)
         txSettings.disableRestartTransactionOnFailure = disableRestartOnFail.selectedSegmentIndex == 0 ? nil : (disableRestartOnFail.selectedSegmentIndex == 1 ? true : false)
         txSettings.forceOfflinePayment = forceOfflineSwitch.selectedSegmentIndex == 0 ? nil : (forceOfflineSwitch.selectedSegmentIndex == 1 ? true : false)
-        if let store = store {
-            store.cardNotPresent = cardNotPresent.selectedSegmentIndex == 0 ? nil : (cardNotPresent.selectedSegmentIndex == 1 ? true : false)
-        }
+        store.cardNotPresent = cardNotPresent.selectedSegmentIndex == 0 ? nil : (cardNotPresent.selectedSegmentIndex == 1 ? true : false)
         
         var cem = 0;
         cem |= (swipeSwitch.isOn ? cloverConnector.CARD_ENTRY_METHOD_MAG_STRIPE : 0)
@@ -170,7 +161,7 @@ class SimpleTestViewController : UITableViewController {
         self.currentExecutor = PaymentExecutor(cloverConnector: cloverConnector, parentViewController: self, payment: nil)
         
         if let pe = self.currentExecutor as? PaymentExecutor {
-            pe.cardNotPresent = store?.cardNotPresent
+            pe.cardNotPresent = store.cardNotPresent
         }
         
         if let amt = Int(txAmount.text ?? "2525") {
@@ -193,7 +184,7 @@ class SimpleTestViewController : UITableViewController {
             (self.currentExecutor as? PaymentExecutor)?.amount = 2525
         }
 
-        (self.currentExecutor as? PaymentExecutor)?.transactionSettings = store?.transactionSettings
+        (self.currentExecutor as? PaymentExecutor)?.transactionSettings = store.transactionSettings
         (self.currentExecutor as? PaymentExecutor)?.vaultedCard = card
         currentExecutor?.run()
     }
@@ -697,7 +688,10 @@ class PrintReceiptExecutor:BaseExecutor {
 
         let alert = UIAlertController(title: "Receipt?", message: "Would you like to display the receipt screen?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { [weak self] action in
-            self?.cloverConnector?.displayPaymentReceiptOptions(orderId: orderId, paymentId: id)
+            let receiptOptionsRequest = DisplayReceiptOptionsRequest()
+            receiptOptionsRequest.orderId = orderId
+            receiptOptionsRequest.paymentId = id
+            self?.cloverConnector?.displayReceiptOptions(receiptOptionsRequest)
         }))
         alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
         

@@ -8,9 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		47A6A763F06D9BCC500DD2D1 /* Pods_CloverConnector_iOS_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DA2362BAF8C98B4434B6E03 /* Pods_CloverConnector_iOS_Example.framework */; };
+		72046C3522027BF200213C77 /* DisplayReceiptOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72046C3422027BF200213C77 /* DisplayReceiptOptionsViewController.swift */; };
+		72CD89B722384BF100716BB3 /* TipSuggestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CD89B622384BF100716BB3 /* TipSuggestionsViewController.swift */; };
 		E3614E52215E812C003F0758 /* LoyaltyTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3614E51215E812C003F0758 /* LoyaltyTestViewController.swift */; };
 		E37E1D87218CF40E00F824F3 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = E37E1D86218CF40E00F824F3 /* README.md */; };
-		E37E1D89218D052600F824F3 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = E37E1D88218D052600F824F3 /* LICENSE */; };
 		E39B4AA220EFE0C2008CA6AF /* PreAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A7720EFE0C2008CA6AF /* PreAuthViewController.swift */; };
 		E39B4AA320EFE0C2008CA6AF /* TabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A7820EFE0C2008CA6AF /* TabController.swift */; };
 		E39B4AA420EFE0C2008CA6AF /* ManualRefundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A7920EFE0C2008CA6AF /* ManualRefundViewController.swift */; };
@@ -46,6 +47,7 @@
 		E39B4AC420EFE0C2008CA6AF /* PrintTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4A9E20EFE0C2008CA6AF /* PrintTestViewController.swift */; };
 		E39B4AC620EFE0C2008CA6AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4AA020EFE0C2008CA6AF /* AppDelegate.swift */; };
 		E39B4AC720EFE0C2008CA6AF /* BaseUISplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39B4AA120EFE0C2008CA6AF /* BaseUISplitViewController.swift */; };
+		E3C7295220F689B400AA0D8E /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = E3C7295020F689B400AA0D8E /* LICENSE */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -76,9 +78,10 @@
 		607FACD01AFB9204008FA782 /* CloverConnector iOS Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CloverConnector iOS Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DA2362BAF8C98B4434B6E03 /* Pods_CloverConnector_iOS_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CloverConnector_iOS_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		71752588147198EE313029DA /* Pods-CloverConnector iOS Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CloverConnector iOS Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CloverConnector iOS Example/Pods-CloverConnector iOS Example.debug.xcconfig"; sourceTree = "<group>"; };
+		72046C3422027BF200213C77 /* DisplayReceiptOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayReceiptOptionsViewController.swift; sourceTree = "<group>"; };
+		72CD89B622384BF100716BB3 /* TipSuggestionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipSuggestionsViewController.swift; sourceTree = "<group>"; };
 		E3614E51215E812C003F0758 /* LoyaltyTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyTestViewController.swift; sourceTree = "<group>"; };
 		E37E1D86218CF40E00F824F3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		E37E1D88218D052600F824F3 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		E39B4A7720EFE0C2008CA6AF /* PreAuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreAuthViewController.swift; sourceTree = "<group>"; };
 		E39B4A7820EFE0C2008CA6AF /* TabController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabController.swift; sourceTree = "<group>"; };
 		E39B4A7920EFE0C2008CA6AF /* ManualRefundViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManualRefundViewController.swift; sourceTree = "<group>"; };
@@ -114,6 +117,7 @@
 		E39B4A9E20EFE0C2008CA6AF /* PrintTestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintTestViewController.swift; sourceTree = "<group>"; };
 		E39B4AA020EFE0C2008CA6AF /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E39B4AA120EFE0C2008CA6AF /* BaseUISplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseUISplitViewController.swift; sourceTree = "<group>"; };
+		E3C7295020F689B400AA0D8E /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,7 +144,7 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
-				E37E1D88218D052600F824F3 /* LICENSE */,
+				E3C7295020F689B400AA0D8E /* LICENSE */,
 				E37E1D86218CF40E00F824F3 /* README.md */,
 				E39B4A7520EFE0C2008CA6AF /* Source */,
 				607FACD11AFB9204008FA782 /* Products */,
@@ -216,6 +220,7 @@
 		E3C7295420F68E3A00AA0D8E /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				72046C3422027BF200213C77 /* DisplayReceiptOptionsViewController.swift */,
 				E39B4A9D20EFE0C2008CA6AF /* AvailableItemCollectionViewCell.swift */,
 				E39B4AA120EFE0C2008CA6AF /* BaseUISplitViewController.swift */,
 				E39B4A8F20EFE0C2008CA6AF /* CurrentOrderListItemTableCell.swift */,
@@ -226,6 +231,7 @@
 				E39B4A8120EFE0C2008CA6AF /* ViewController.swift */,
 				E3614E51215E812C003F0758 /* LoyaltyTestViewController.swift */,
 				E39B4A8D20EFE0C2008CA6AF /* Main.storyboard */,
+				72CD89B622384BF100716BB3 /* TipSuggestionsViewController.swift */,
 				E39B4A8B20EFE0C2008CA6AF /* LaunchScreen.storyboard */,
 				E39B4A8720EFE0C2008CA6AF /* AvailableItems.xib */,
 				E39B4A7620EFE0C2008CA6AF /* tabs */,
@@ -247,7 +253,6 @@
 				A3BFB62B8451F330D0854C2B /* [CP] Embed Pods Frameworks */,
 				7EC6DF3A1D90474700D852EF /* Embed Frameworks */,
 				7E00D8271DB47FAF00486F3D /* Embed App Extensions */,
-				16DCF6396DC68C6003D1EB9C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -299,9 +304,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3C7295220F689B400AA0D8E /* LICENSE in Resources */,
 				E39B4AB520EFE0C2008CA6AF /* Main.storyboard in Resources */,
 				E39B4AB320EFE0C2008CA6AF /* Assets.xcassets in Resources */,
-				E37E1D89218D052600F824F3 /* LICENSE in Resources */,
 				E37E1D87218CF40E00F824F3 /* README.md in Resources */,
 				E39B4AB220EFE0C2008CA6AF /* AvailableItems.xib in Resources */,
 				E39B4AB420EFE0C2008CA6AF /* LaunchScreen.storyboard in Resources */,
@@ -311,21 +316,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		16DCF6396DC68C6003D1EB9C /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CloverConnector iOS Example/Pods-CloverConnector iOS Example-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		451692A3AE9366D6EBAE9BB3 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -350,7 +340,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-CloverConnector iOS Example/Pods-CloverConnector iOS Example-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-CloverConnector iOS Example/Pods-CloverConnector iOS Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/CloverConnector/CloverConnector.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
@@ -365,7 +355,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CloverConnector iOS Example/Pods-CloverConnector iOS Example-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CloverConnector iOS Example/Pods-CloverConnector iOS Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -385,6 +375,7 @@
 				E3614E52215E812C003F0758 /* LoyaltyTestViewController.swift in Sources */,
 				E39B4AA520EFE0C2008CA6AF /* MiscViewController.swift in Sources */,
 				E39B4AAA20EFE0C2008CA6AF /* VaultCardViewController.swift in Sources */,
+				72CD89B722384BF100716BB3 /* TipSuggestionsViewController.swift in Sources */,
 				E39B4AB120EFE0C2008CA6AF /* CurrencyUtils.swift in Sources */,
 				E39B4AC320EFE0C2008CA6AF /* AvailableItemCollectionViewCell.swift in Sources */,
 				E39B4AC620EFE0C2008CA6AF /* AppDelegate.swift in Sources */,
@@ -393,6 +384,7 @@
 				E39B4AC420EFE0C2008CA6AF /* PrintTestViewController.swift in Sources */,
 				E39B4ABF20EFE0C2008CA6AF /* POSPayment.swift in Sources */,
 				E39B4AB620EFE0C2008CA6AF /* CurrentOrderListItemTableCell.swift in Sources */,
+				72046C3522027BF200213C77 /* DisplayReceiptOptionsViewController.swift in Sources */,
 				E39B4AAC20EFE0C2008CA6AF /* ViewController.swift in Sources */,
 				E39B4AA320EFE0C2008CA6AF /* TabController.swift in Sources */,
 				E39B4AB920EFE0C2008CA6AF /* POSOrder.swift in Sources */,

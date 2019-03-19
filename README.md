@@ -6,9 +6,9 @@ An example integration of the CloverConnector demonstrating communication betwee
 
 ## Version
 
-Current version: 3.0.0
+Current version: 3.0.2
 
-This example is implemented using v3.0.0 of the CloverConnector SDK, which can be found at [https://github.com/clover/remote-pay-ios/tree/3.0.0](https://github.com/clover/remote-pay-ios/tree/3.0.0).
+This example is implemented using v3.0.2 of the CloverConnector SDK, which can be found at [https://github.com/clover/remote-pay-ios/tree/3.0.2](https://github.com/clover/remote-pay-ios/tree/3.0.2).
 
 ### Dependencies
 * CloverConnector - Provides the communication between the example app and the Clover device.
@@ -34,10 +34,10 @@ This example is implemented using v3.0.0 of the CloverConnector SDK, which can b
 ## Additional Resources
 
 * [Release Notes](https://github.com/clover/remote-pay-ios/releases)
-* [iOS SDK](https://github.com/clover/remote-pay-ios/tree/3.0.0)
+* [iOS SDK](https://github.com/clover/remote-pay-ios/tree/3.0.2)
 * [Tutorial for the iOS SDK](https://docs.clover.com/build/getting-started-with-clover-connector/?sdk=ios)
-* [API Documentation](https://clover.github.io/remote-pay-ios/3.0.0/docs/index.html)
+* [API Documentation](https://clover.github.io/remote-pay-ios/3.0.2/docs/index.html)
 * [Clover Developer Community](https://community.clover.com/index.html)
 
 ## License 
-Copyright © 2018 Clover Network, Inc. All rights reserved.
+Copyright © 2019 Clover Network, Inc. All rights reserved.
