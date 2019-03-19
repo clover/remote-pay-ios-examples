@@ -16,7 +16,7 @@ class RegisterViewController:UIViewController, POSOrderListener, POSStoreListene
     @IBOutlet weak var currentOrderView: UIView!
     @IBOutlet weak var storeView: UIView!
     var startingPoint:CGRect?
-    fileprivate var store:POSStore?
+    fileprivate var store = POSStore.shared
     @IBOutlet weak var subTotalLabel: UILabel!
     @IBOutlet weak var discountsLabel: UILabel!
     @IBOutlet weak var taxLabel: UILabel!
@@ -35,14 +35,13 @@ class RegisterViewController:UIViewController, POSOrderListener, POSStoreListene
     @IBOutlet var longPressGestureRecognizer: UILongPressGestureRecognizer!
     
     override func viewDidLoad() {
-        store = (UIApplication.shared.delegate as? AppDelegate)?.store
         (UIApplication.shared.delegate as? AppDelegate)?.cloverConnectorListener?.viewController = self
         
         let dragGesture = UIPanGestureRecognizer(target: self, action: #selector(panCurrentOrderView))
         currentOrderView.addGestureRecognizer(dragGesture)
         
-        store?.addCurrentOrderListener(self)
-        store?.addStoreListener(self)
+        store.addCurrentOrderListener(self)
+        store.addStoreListener(self)
         
         startingPoint = currentOrderView.frame
         
@@ -59,8 +58,8 @@ class RegisterViewController:UIViewController, POSOrderListener, POSStoreListene
         guard let indexPath = currentOrderListItems.indexPathForRow(at: cgPoint) else { return }
         
         if sender.state == UIGestureRecognizer.State.ended {
-            if let data = store?.currentOrder?.items[indexPath.row] {
-                store?.currentOrder?.removeLineItem(data)
+            if let data = store.currentOrder?.items[indexPath.row] {
+                store.currentOrder?.removeLineItem(data)
             }
         }
     }
@@ -224,9 +223,7 @@ class RegisterViewController:UIViewController, POSOrderListener, POSStoreListene
     
     
     func updateTotals() {
-        if let store = self.store,
-            let currentOrder = store.currentOrder
-        {
+        if let currentOrder = store.currentOrder {
             DispatchQueue.main.async{ [unowned self] in
                 self.subTotalLabel.text = CurrencyUtils.IntToFormat(currentOrder.getSubtotal())
                 self.taxLabel.text = CurrencyUtils.IntToFormat(currentOrder.getTaxAmount())
@@ -236,20 +233,17 @@ class RegisterViewController:UIViewController, POSOrderListener, POSStoreListene
             }
             
             // update DisplayOrder..
-
             self.currentDisplayOrder.total = CurrencyUtils.IntToFormat(currentOrder.getTotal())
             self.currentDisplayOrder.subtotal = CurrencyUtils.IntToFormat(currentOrder.getSubtotal())
             self.currentDisplayOrder.tax = CurrencyUtils.IntToFormat(currentOrder.getTaxAmount())
         }
-        
     }
     
     // TableView
     
     
     func tableView(_ tv: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let store = store,
-            let currentOrder = store.currentOrder {
+        if let currentOrder = store.currentOrder {
             if indexPath.row < currentOrder.items.count {
                 let data = currentOrder.items[indexPath.row]
                 
@@ -261,14 +255,10 @@ class RegisterViewController:UIViewController, POSOrderListener, POSStoreListene
         }
 
         return tv.dequeueReusableCell( withIdentifier: "OrderItemCell", for: indexPath)
-
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let store = store,
-            let currentOrder = store.currentOrder {
-            return currentOrder.items.count;
-        }
-        return 0;
+            return store.currentOrder?.items.count ?? 0
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -277,14 +267,13 @@ class RegisterViewController:UIViewController, POSOrderListener, POSStoreListene
     
     // Collection View
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return store?.availableItems.count ?? 0
+        return store.availableItems.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell:UICollectionViewCell = collectionView.dequeueReusableCell( withReuseIdentifier: "AvailableItemCell", for: indexPath)
         
-        if let store = store,
-            let cell = cell as? AvailableItemCollectionViewCell {
+        if let cell = cell as? AvailableItemCollectionViewCell {
             cell.item = store.availableItems[indexPath.row]
         }
         return cell
@@ -292,10 +281,8 @@ class RegisterViewController:UIViewController, POSOrderListener, POSStoreListene
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let store = store {
-            store.currentOrder?.addLineItem(POSLineItem(item: store.availableItems[(indexPath as IndexPath).row]))
-            //currentOrderListItems.reloadData()
-        }
+        store.currentOrder?.addLineItem(POSLineItem(item: store.availableItems[(indexPath as IndexPath).row]))
+        //currentOrderListItems.reloadData()
     }
     
 
@@ -314,70 +301,73 @@ class RegisterViewController:UIViewController, POSOrderListener, POSStoreListene
     }
     
     @IBAction func saleButtonClicked(_ sender: UIButton) {
-        
-        guard let currentOrder = store?.currentOrder else { return }
+        guard let currentOrder = store.currentOrder else { return }
         guard let cloverConnector = (UIApplication.shared.delegate as? AppDelegate)?.cloverConnector else { return }
         
         currentOrder.pendingPaymentId = String(arc4random())
         let sr = SaleRequest(amount:currentOrder.getTotal(), externalId: currentOrder.pendingPaymentId!)
         // below are all optional
-        sr.allowOfflinePayment = store?.transactionSettings.allowOfflinePayment
-        sr.approveOfflinePaymentWithoutPrompt = store?.transactionSettings.approveOfflinePaymentWithoutPrompt
-        sr.autoAcceptSignature = store?.transactionSettings.autoAcceptSignature
-        sr.autoAcceptPaymentConfirmations = store?.transactionSettings.autoAcceptPaymentConfirmations
-        sr.cardEntryMethods = store?.transactionSettings.cardEntryMethods ?? cloverConnector.CARD_ENTRY_METHODS_DEFAULT
-        sr.disableCashback = store?.transactionSettings.disableCashBack
-        sr.disableDuplicateChecking = store?.transactionSettings.disableDuplicateCheck
-        if let enablePrinting = store?.transactionSettings.cloverShouldHandleReceipts {
+        sr.allowOfflinePayment = store.transactionSettings.allowOfflinePayment
+        sr.approveOfflinePaymentWithoutPrompt = store.transactionSettings.approveOfflinePaymentWithoutPrompt
+        sr.autoAcceptSignature = store.transactionSettings.autoAcceptSignature
+        sr.autoAcceptPaymentConfirmations = store.transactionSettings.autoAcceptPaymentConfirmations
+        sr.cardEntryMethods = store.transactionSettings.cardEntryMethods ?? cloverConnector.CARD_ENTRY_METHODS_DEFAULT
+        sr.disableCashback = store.transactionSettings.disableCashBack
+        sr.disableDuplicateChecking = store.transactionSettings.disableDuplicateCheck
+        if let enablePrinting = store.transactionSettings.cloverShouldHandleReceipts {
             sr.disablePrinting = !enablePrinting
         }
-        sr.disableReceiptSelection = store?.transactionSettings.disableReceiptSelection
-        sr.disableRestartTransactionOnFail = store?.transactionSettings.disableRestartTransactionOnFailure
+        sr.disableReceiptSelection = store.transactionSettings.disableReceiptSelection
+        sr.disableRestartTransactionOnFail = store.transactionSettings.disableRestartTransactionOnFailure
         
-        if let txTipModeString = store?.transactionSettings.tipMode?.rawValue,
+        if let txTipModeString = store.transactionSettings.tipMode?.rawValue,
             let srTipMode = SaleRequest.TipMode(rawValue: txTipModeString) {
             sr.tipMode = srTipMode
         }
         
-        sr.forceOfflinePayment = store?.transactionSettings.forceOfflinePayment
-        sr.cardNotPresent = store?.cardNotPresent
+        sr.tipSuggestions = store.transactionSettings.tipSuggestions
+        
+        sr.forceOfflinePayment = store.transactionSettings.forceOfflinePayment
+        sr.cardNotPresent = store.cardNotPresent
         
         sr.tipAmount = nil
         sr.tippableAmount = currentOrder.getTippableAmount()
         sr.tipMode = SaleRequest.TipMode.ON_SCREEN_BEFORE_PAYMENT
         
-        (UIApplication.shared.delegate as? AppDelegate)?.cloverConnector?.sale(sr)    }
+        (UIApplication.shared.delegate as? AppDelegate)?.cloverConnector?.sale(sr)
+    }
+    
     @IBAction func authButtonClicked(_ sender: UIButton) {
-        
-        guard let currentOrder = store?.currentOrder else { return }
+        guard let currentOrder = store.currentOrder else { return }
         guard let cloverConnector = (UIApplication.shared.delegate as? AppDelegate)?.cloverConnector else { return }
         currentOrder.pendingPaymentId = String(arc4random())
-
+        
         let ar = AuthRequest(amount: currentOrder.getTotal(), externalId: currentOrder.pendingPaymentId!)
         // below are all optional
-        ar.allowOfflinePayment = store?.transactionSettings.allowOfflinePayment
-        ar.approveOfflinePaymentWithoutPrompt = store?.transactionSettings.approveOfflinePaymentWithoutPrompt
-        ar.autoAcceptSignature = store?.transactionSettings.autoAcceptSignature
-        ar.autoAcceptPaymentConfirmations = store?.transactionSettings.autoAcceptPaymentConfirmations
-        ar.cardEntryMethods = store?.transactionSettings.cardEntryMethods ?? cloverConnector.CARD_ENTRY_METHODS_DEFAULT
-        ar.disableCashback = store?.transactionSettings.disableCashBack
-        ar.disableDuplicateChecking = store?.transactionSettings.disableDuplicateCheck
-        if let enablePrinting = store?.transactionSettings.cloverShouldHandleReceipts {
+        ar.allowOfflinePayment = store.transactionSettings.allowOfflinePayment
+        ar.approveOfflinePaymentWithoutPrompt = store.transactionSettings.approveOfflinePaymentWithoutPrompt
+        ar.autoAcceptSignature = store.transactionSettings.autoAcceptSignature
+        ar.autoAcceptPaymentConfirmations = store.transactionSettings.autoAcceptPaymentConfirmations
+        ar.cardEntryMethods = store.transactionSettings.cardEntryMethods ?? cloverConnector.CARD_ENTRY_METHODS_DEFAULT
+        ar.disableCashback = store.transactionSettings.disableCashBack
+        ar.disableDuplicateChecking = store.transactionSettings.disableDuplicateCheck
+        if let enablePrinting = store.transactionSettings.cloverShouldHandleReceipts {
             ar.disablePrinting = !enablePrinting
         }
-        ar.disableReceiptSelection = store?.transactionSettings.disableReceiptSelection
-        ar.disableRestartTransactionOnFail = store?.transactionSettings.disableRestartTransactionOnFailure
+        ar.disableReceiptSelection = store.transactionSettings.disableReceiptSelection
+        ar.disableRestartTransactionOnFail = store.transactionSettings.disableRestartTransactionOnFailure
         
-        ar.forceOfflinePayment = store?.transactionSettings.forceOfflinePayment
-        ar.cardNotPresent = store?.cardNotPresent
+        ar.forceOfflinePayment = store.transactionSettings.forceOfflinePayment
+        ar.cardNotPresent = store.cardNotPresent
         
         ar.tippableAmount = currentOrder.getTippableAmount()
+        ar.tipSuggestions = store.transactionSettings.tipSuggestions
         
-        (UIApplication.shared.delegate as? AppDelegate)?.cloverConnector?.auth(ar)    }
+        (UIApplication.shared.delegate as? AppDelegate)?.cloverConnector?.auth(ar)
+    }
+    
     @IBAction func newOrderButtonClicked(_ sender: UIButton) {
-        if let store = store {
-            store.newOrder()
-            updateTotals()
-        }
+        store.newOrder()
+        updateTotals()
     }
 }

@@ -17,16 +17,10 @@ class ManualRefundViewController:UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var refundButton: UIButton!
     @IBOutlet weak var manualRefundsTable: UITableView!
     
-    fileprivate func getStore() -> POSStore? {
-        if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
-            return appDelegate.store
-        }
-        return nil
-    }
-    
+    let store = POSStore.shared
     
     override func viewDidAppear(_ animated: Bool) {
-        getStore()?.addStoreListener(self)
+        store.addStoreListener(self)
         
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: OperationQueue.main, using: {[weak self] notification in
             guard let self = self else { return }
@@ -43,16 +37,11 @@ class ManualRefundViewController:UIViewController, UITableViewDelegate, UITableV
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        getStore()?.removeStoreListener(self)
+        store.removeStoreListener(self)
         
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    
-    deinit {
-
-    }
-    
     
     @IBAction func onManualRefund(_ sender: UIButton) {
         refundAmount.resignFirstResponder()
@@ -61,18 +50,14 @@ class ManualRefundViewController:UIViewController, UITableViewDelegate, UITableV
             let request = ManualRefundRequest(amount: amt, externalId: String(arc4random()))
             (UIApplication.shared.delegate as? AppDelegate)?.cloverConnector?.manualRefund(request)
         }
-        
     }
-    
-    
-
     
     fileprivate func getKeyboardHeight(_ notification: Notification) -> CGFloat? {
         return (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return getStore()?.manualRefunds.count ?? 0
+        return store.manualRefunds.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -82,7 +67,8 @@ class ManualRefundViewController:UIViewController, UITableViewDelegate, UITableV
             cell = UITableViewCell(style: UITableViewCell.CellStyle.value1, reuseIdentifier: "MRCell")
         }
         
-        if let refunds = getStore()?.manualRefunds, indexPath.row < refunds.count {
+        let refunds = store.manualRefunds
+        if indexPath.row < refunds.count {
             cell?.textLabel?.text = CurrencyUtils.IntToFormat(refunds[indexPath.row].amount) ?? "$ ?.??"
         } else {
             cell?.textLabel?.text = "UNKNOWN"
@@ -90,10 +76,6 @@ class ManualRefundViewController:UIViewController, UITableViewDelegate, UITableV
         
         return cell ?? UITableViewCell()
     }
-    
-    
-
-    
 }
 
 extension ManualRefundViewController : POSStoreListener {

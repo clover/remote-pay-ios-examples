@@ -18,26 +18,8 @@ public class PreAuthViewController:UIViewController, UITableViewDelegate, UITabl
     
     @IBOutlet weak var tableView: UITableView!
     
-    fileprivate var store:POSStore? {
-        get {
-            return (UIApplication.shared.delegate as? AppDelegate)?.store
-        }
-    }
-    
-    fileprivate func getStore() -> POSStore? {
-        if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
-            return appDelegate.store
-        }
-        return nil
-    }
-
-    
-    deinit {
-
-    }
-    
     override public func viewDidAppear(_ animated: Bool) {
-        getStore()?.addStoreListener(self)
+        POSStore.shared.addStoreListener(self)
         
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: OperationQueue.main, using: {[weak self] notification in
             guard let self = self else { return }
@@ -54,7 +36,7 @@ public class PreAuthViewController:UIViewController, UITableViewDelegate, UITabl
     }
     
     override public func viewDidDisappear(_ animated: Bool) {
-        getStore()?.removeStoreListener(self)
+        POSStore.shared.removeStoreListener(self)
 
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -62,7 +44,7 @@ public class PreAuthViewController:UIViewController, UITableViewDelegate, UITabl
 
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return getStore()?.preAuths.count ?? 0
+        return POSStore.shared.preAuths.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -72,7 +54,8 @@ public class PreAuthViewController:UIViewController, UITableViewDelegate, UITabl
             cell = UITableViewCell(style: UITableViewCell.CellStyle.value1, reuseIdentifier: "PACell")
         }
         
-        if let preAuths = getStore()?.preAuths, indexPath.row < preAuths.count {
+        let preAuths = POSStore.shared.preAuths
+        if indexPath.row < preAuths.count {
             let thisPreAuth = preAuths[indexPath.row]
             cell?.textLabel?.text = "x\(thisPreAuth.last4 ?? "----")    \(thisPreAuth.name ?? "")"
             cell?.detailTextLabel?.text = CurrencyUtils.IntToFormat(thisPreAuth.amount) ?? "$ ?.??"
@@ -87,11 +70,10 @@ public class PreAuthViewController:UIViewController, UITableViewDelegate, UITabl
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        guard let store = (UIApplication.shared.delegate as? AppDelegate)?.store else { return }
         guard let cloverConnector = (UIApplication.shared.delegate as? AppDelegate)?.cloverConnector else { return }
-        guard let currentOrder = store.currentOrder else { return }
-        if indexPath.row >= store.preAuths.count { return }
-        let preAuthPayment = store.preAuths[indexPath.row]
+        guard let currentOrder = POSStore.shared.currentOrder else { return }
+        if indexPath.row >= POSStore.shared.preAuths.count { return }
+        let preAuthPayment = POSStore.shared.preAuths[indexPath.row]
         
         let alert = UIAlertController(title: "Pay with PreAuth", message: nil, preferredStyle: .alert)
         if currentOrder.getTotal() > 0 {
@@ -100,13 +82,13 @@ public class PreAuthViewController:UIViewController, UITableViewDelegate, UITabl
                 cloverConnector.capturePreAuth(cpar)
             }))
             alert.addAction(UIAlertAction(title: "Delete PreAuth", style: .destructive, handler: { action in
-                store.removePreAuth(preAuthPayment)
+                POSStore.shared.removePreAuth(preAuthPayment)
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         } else {
             alert.message = "Please create an order to apply to this PreAuth in the Register."
             alert.addAction(UIAlertAction(title: "Delete Pre-Auth", style: .destructive, handler: { action in
-                store.removePreAuth(preAuthPayment)
+                POSStore.shared.removePreAuth(preAuthPayment)
             }))
             alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         }
@@ -114,20 +96,19 @@ public class PreAuthViewController:UIViewController, UITableViewDelegate, UITabl
     }
     
     func generateCPAR(payment:POSPayment) -> CapturePreAuthRequest? {
-        guard let store = (UIApplication.shared.delegate as? AppDelegate)?.store,
-            let currentOrder = store.currentOrder else { return nil }
+        guard let currentOrder = POSStore.shared.currentOrder else { return nil }
         let car = CapturePreAuthRequest(amount: currentOrder.getTotal(), paymentId: payment.paymentId)
         car.externalId = payment.externalPaymentId
         car.tipAmount = currentOrder.getTipAmount()
         car.tippableAmount = currentOrder.getTippableAmount()
-        car.tipMode = store.transactionSettings.tipMode
-        car.autoAcceptsSignature = store.transactionSettings.autoAcceptSignature
-        if let cloverShouldHandleReceipts = store.transactionSettings.cloverShouldHandleReceipts {
+        car.tipMode = POSStore.shared.transactionSettings.tipMode
+        car.autoAcceptsSignature = POSStore.shared.transactionSettings.autoAcceptSignature
+        if let cloverShouldHandleReceipts = POSStore.shared.transactionSettings.cloverShouldHandleReceipts {
             car.disablePrinting = !cloverShouldHandleReceipts
         }
-        car.signatureEntryLocation = store.transactionSettings.signatureEntryLocation
-        car.disableReceiptSelection = store.transactionSettings.disableReceiptSelection
-        car.signatureThreshold = store.transactionSettings.signatureThreshold
+        car.signatureEntryLocation = POSStore.shared.transactionSettings.signatureEntryLocation
+        car.disableReceiptSelection = POSStore.shared.transactionSettings.disableReceiptSelection
+        car.signatureThreshold = POSStore.shared.transactionSettings.signatureThreshold
         return car
     }
     
@@ -139,11 +120,11 @@ public class PreAuthViewController:UIViewController, UITableViewDelegate, UITabl
             (UIApplication.shared.delegate as? AppDelegate)?.cloverConnectorListener?.preAuthExpectedResponseId = externalId
             let par = PreAuthRequest(amount: amt, externalId: externalId)
             // below are all optional
-            if let enablePrinting = store?.transactionSettings.cloverShouldHandleReceipts {
+            if let enablePrinting = POSStore.shared.transactionSettings.cloverShouldHandleReceipts {
                 par.disablePrinting = !enablePrinting
             }
-            par.disableReceiptSelection = store?.transactionSettings.disableReceiptSelection
-            par.disableRestartTransactionOnFail = store?.transactionSettings.disableRestartTransactionOnFailure
+            par.disableReceiptSelection = POSStore.shared.transactionSettings.disableReceiptSelection
+            par.disableRestartTransactionOnFail = POSStore.shared.transactionSettings.disableRestartTransactionOnFailure
             
             (UIApplication.shared.delegate as? AppDelegate)?.cloverConnector?.preAuth(par)
         }

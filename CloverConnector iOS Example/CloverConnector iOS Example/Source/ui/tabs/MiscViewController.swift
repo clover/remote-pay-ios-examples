@@ -80,4 +80,9 @@ class MiscViewController : UIViewController, UINavigationControllerDelegate {
         let rpr = RetrievePaymentRequest(epi)
         appDelegate?.cloverConnector?.retrievePayment(rpr)
     }
+    
+    @IBAction func closeoutButtonTapped(_ sender: UIButton) {
+        let closeoutRequest = CloseoutRequest(allowOpenTabs: true, batchId: nil)
+        appDelegate?.cloverConnector?.closeout(closeoutRequest)
+    }
 }

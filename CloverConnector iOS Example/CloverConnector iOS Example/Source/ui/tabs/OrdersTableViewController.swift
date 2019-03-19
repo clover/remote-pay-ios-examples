@@ -14,36 +14,39 @@ class OrdersTableViewController : UITableViewController, POSStoreListener, POSOr
     
     @IBOutlet var ordersTable: UITableView!
     
+    var store = POSStore.shared
     weak var selOrder:POSOrder?
+    /// Temporary reference to data that we need to segue to another view controller. (see DisplayReceiptOptionsViewController usages below)
+    private weak var segueItem:POSExchange?
     
     fileprivate var items:[(type: ITEM_TYPE, data: AnyObject)] {
         get {
             var _items:[(type: ITEM_TYPE, data: AnyObject)] = []
-            if let orders = self.store?.orders {
-                for o in orders {
-                    if (o ).status != .READY {
-                        _items.append((type: .order, data: o))
-                        
-                        if selOrder != nil && selOrder! === o {
-                            if let payments = selOrder?.payments {
-                                for p in payments {
-                                    _items.append((type: .payment, data: p))
-                                }
+            
+            for order in self.store.orders {
+                if order.status != .READY {
+                    _items.append((type: .order, data: order))
+                    
+                    if selOrder != nil && selOrder! === order {
+                        if let payments = selOrder?.payments {
+                            for p in payments {
+                                _items.append((type: .payment, data: p))
                             }
-                            if let refunds = selOrder?.refunds {
-                                for r in refunds {
-                                    _items.append((type: .refund, data: r))
-                                }
-                            }
-                            /*if let items = selOrder?.items {
-                             for var i in items {
-                             _items.append((type: .ITEM, data: i))
-                             }
-                             }*/
                         }
+                        if let refunds = selOrder?.refunds {
+                            for r in refunds {
+                                _items.append((type: .refund, data: r))
+                            }
+                        }
+                        /*if let items = selOrder?.items {
+                         for var i in items {
+                         _items.append((type: .ITEM, data: i))
+                         }
+                         }*/
                     }
                 }
             }
+            
             return _items
         }
     }
@@ -58,16 +61,9 @@ class OrdersTableViewController : UITableViewController, POSStoreListener, POSOr
 
     
     override func viewDidLoad() {
-        if let store = self.store {
-            store.addStoreListener(self)
-            store.addCurrentOrderListener(self)
-            selOrder = store.orders.last
-        }
-        
-    }
-    
-    fileprivate var store:POSStore? {
-        return (UIApplication.shared.delegate as? AppDelegate)?.store
+        self.store.addStoreListener(self)
+        store.addCurrentOrderListener(self)
+        selOrder = store.orders.last
     }
     
     fileprivate var cloverConnector:ICloverConnector? {
@@ -83,24 +79,24 @@ class OrdersTableViewController : UITableViewController, POSStoreListener, POSOr
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let item = items[indexPath.row]
         switch item.type {
-            case .order:
-                guard let order = item.data as? POSOrder,
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "OrderTableCell") as? OrdersTableViewCell else { return UITableViewCell() }
-                
-                cell.orderPriceLabel.text = (CurrencyUtils.IntToFormat(order.getTotal()) ?? CurrencyUtils.FormatZero())
-                cell.orderNumberLabel.text = String(order.orderNumber)
-                cell.orderStatusLabel.text = order.status.rawValue
-                cell.orderDateLabel.text = String(describing: order.date)
-                return cell
-            case .payment:
-                guard let payment = item.data as? POSPayment,
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "OrderTablePaymentCell") as? OrdersTablePaymentViewCell else { return UITableViewCell() }
-                
-                cell.paymentPriceLabel.text = CurrencyUtils.IntToFormat(payment.amount) ?? CurrencyUtils.FormatZero()
-                cell.paymentExternalIdLabel.text = payment.externalPaymentId ?? ""
-                cell.paymentStatusLabel.text = payment.status.rawValue
-                cell.paymentTipLabel.text = CurrencyUtils.IntToFormat(payment.tipAmount ?? 0) ?? CurrencyUtils.FormatZero()
-                return cell
+        case .order:
+            guard let order = item.data as? POSOrder,
+                let cell = tableView.dequeueReusableCell(withIdentifier: "OrderTableCell") as? OrdersTableViewCell else { return UITableViewCell() }
+            
+            cell.orderPriceLabel.text = (CurrencyUtils.IntToFormat(order.getTotal()) ?? CurrencyUtils.FormatZero())
+            cell.orderNumberLabel.text = String(order.orderNumber)
+            cell.orderStatusLabel.text = order.status.rawValue
+            cell.orderDateLabel.text = String(describing: order.date)
+            return cell
+        case .payment:
+            guard let payment = item.data as? POSPayment,
+                let cell = tableView.dequeueReusableCell(withIdentifier: "OrderTablePaymentCell") as? OrdersTablePaymentViewCell else { return UITableViewCell() }
+            
+            cell.paymentPriceLabel.text = CurrencyUtils.IntToFormat(payment.amount) ?? CurrencyUtils.FormatZero()
+            cell.paymentExternalIdLabel.text = payment.externalPaymentId ?? ""
+            cell.paymentStatusLabel.text = payment.status.rawValue
+            cell.paymentTipLabel.text = CurrencyUtils.IntToFormat(payment.tipAmount ?? 0) ?? CurrencyUtils.FormatZero()
+            return cell
         case .refund:
             guard let refund = item.data as? POSRefund,
                 let cell = tableView.dequeueReusableCell(withIdentifier: "OrderTablePaymentCell") as? OrdersTablePaymentViewCell else { return UITableViewCell() }
@@ -125,8 +121,12 @@ class OrdersTableViewController : UITableViewController, POSStoreListener, POSOr
             guard let payment = selItem.data as? POSPayment else { return }
             
             if payment.status != .VOIDED {
-                
-                let uvc = UIAlertController(title: "Modify Payment", message: "", preferredStyle: .alert)
+                let uvc = UIAlertController(title: "Payment", message: "", preferredStyle: .alert)
+                uvc.addAction(UIAlertAction(title: "Print Receipt", style: .default, handler: { (aa) in
+                    uvc.dismiss(animated: true, completion: nil)
+                    self.segueItem = payment
+                    self.performSegue(withIdentifier: DisplayReceiptOptionsViewController.segueId, sender: self)
+                }))
                 
                 uvc.addAction(UIAlertAction(title: "Void", style: .default, handler: { (aa) in
                     uvc.dismiss(animated: true, completion: nil)
@@ -174,12 +174,17 @@ class OrdersTableViewController : UITableViewController, POSStoreListener, POSOr
         } else if selItem.type == .refund {
             guard let refund = selItem.data as? POSRefund else { return }
             
-            let alertVC = UIAlertController(title: "Void Refund", message: "Do you want to void this refund?", preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (alertAction) in
+            let alertVC = UIAlertController(title: "Refund", message: "What do you want to do with this refund?", preferredStyle: .alert)
+            alertVC.addAction(UIAlertAction(title: "Print Receipt", style: .default, handler: { (aa) in
+                alertVC.dismiss(animated: true, completion: nil)
+                self.segueItem = refund
+                self.performSegue(withIdentifier: DisplayReceiptOptionsViewController.segueId, sender: self)
+            }))
+            alertVC.addAction(UIAlertAction(title: "Void it", style: .default, handler: { (alertAction) in
                 let voidRefundRequest = VoidPaymentRefundRequest(refundId: refund.refundId, employeeId: nil, orderId: refund.orderId, disablePrinting: nil, disableReceiptSelection: nil)
                 self.cloverConnector?.voidPaymentRefund(voidRefundRequest)
             }))
-            alertVC.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+            alertVC.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             self.present(alertVC, animated: true, completion: nil)
         } else {
             debugPrint("unknown type selected")
@@ -197,12 +202,13 @@ class OrdersTableViewController : UITableViewController, POSStoreListener, POSOr
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let orderDetails = segue.destination as? OrderDetailsViewController,
-            let sender = sender as? UITableViewCell,
-            let indexPath = tableView.indexPath(for: sender ) else { return }
-        orderDetails.selOrder = items[indexPath.row].data as? POSOrder
+        if let orderDetailsVC = segue.destination as? OrderDetailsViewController, let indexPath = tableView.indexPathForSelectedRow {
+            orderDetailsVC.selOrder = items[indexPath.row].data as? POSOrder
+        } else if let printReceiptVC = segue.destination as? DisplayReceiptOptionsViewController {
+            printReceiptVC.transaction = segueItem
+            segueItem = nil //clean up this temporary reference
+        }
     }
-
     
     // MARK: - Store Listener
     func newOrderCreated(_ order: POSOrder) {
