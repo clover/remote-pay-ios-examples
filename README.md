@@ -6,9 +6,9 @@ An example integration of the CloverConnector demonstrating communication betwee
 
 ## Version
 
-Current version: 3.0.2
+Current version: 3.0.3
 
-This example is implemented using v3.0.2 of the CloverConnector SDK, which can be found at [https://github.com/clover/remote-pay-ios/tree/3.0.2](https://github.com/clover/remote-pay-ios/tree/3.0.2).
+This example is implemented using v3.0.3 of the CloverConnector SDK, which can be found at [https://github.com/clover/remote-pay-ios/tree/3.0.3](https://github.com/clover/remote-pay-ios/tree/3.0.3).
 
 ### Dependencies
 * CloverConnector - Provides the communication between the example app and the Clover device.
@@ -17,11 +17,12 @@ This example is implemented using v3.0.2 of the CloverConnector SDK, which can b
 * Starscream - provides websocket client capabilities.
 
 ## Building the example app
-* Download and install Xcode 10
+* Download and install [Xcode](https://apps.apple.com/us/app/xcode/id497799835?mt=12)
 * Install CocoaPods
     * Run `sudo gem install cocoapods`
-* Clone/download the CloverConnector repository
-    * cd into `remote-pay-ios/Example`
+* Clone/download the [CloverConnector SDK](https://github.com/clover/remote-pay-ios/) into a common folder with [this example source](https://github.com/clover/remote-pay-ios-examples). 
+    For example, your <project root> folder should now contain two sibling subfolders, one named `remote-pay-ios` and one named `remote-pay-ios-examples`
+    * cd into `<project root>/remote-pay-ios-examples/CloverConnector iOS Example`
     * Run `pod install`
         * This should create a Pods directory populated with the Pods specified in the Podspec
         * It should also create a workspace file that includes the project, plus a pods project
@@ -34,9 +35,9 @@ This example is implemented using v3.0.2 of the CloverConnector SDK, which can b
 ## Additional Resources
 
 * [Release Notes](https://github.com/clover/remote-pay-ios/releases)
-* [iOS SDK](https://github.com/clover/remote-pay-ios/tree/3.0.2)
-* [Tutorial for the iOS SDK](https://docs.clover.com/build/getting-started-with-clover-connector/?sdk=ios)
-* [API Documentation](https://clover.github.io/remote-pay-ios/3.0.2/docs/index.html)
+* [iOS SDK](https://github.com/clover/remote-pay-ios/tree/3.0.3)
+* [Tutorial for the iOS SDK](https://docs.clover.com/clover-platform/docs/ios)
+* [API Documentation](https://clover.github.io/remote-pay-ios/3.0.3/docs/index.html)
 * [Clover Developer Community](https://community.clover.com/index.html)
 
 ## License 
