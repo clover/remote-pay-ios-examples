@@ -16,7 +16,7 @@ public class POSStore {
     public var orders = [POSOrder]()
     public var currentOrder:POSOrder? = nil
     public var availableItems = [POSItem]()
-    public var preAuths = [POSPayment]()
+    public var preAuths = [POSPreauth]()
     public var vaultedCards = [POSCard]()
     public var manualRefunds = [POSNakedRefund]()
     
@@ -75,15 +75,24 @@ public class POSStore {
         order.addPayment(payment)
     }
     
-    public func addPreAuth(_ payment:POSPayment) {
+    public func addPreAuth(_ payment: POSPreauth) {
         preAuths.append(payment)
         for listener in storeListeners {
             (listener as? POSStoreListener)?.preAuthAdded(payment)
         }
     }
     
-    public func removePreAuth(_ payment:POSPayment) {
-        guard let index = preAuths.index(where: { $0.paymentId == payment.paymentId }) else {
+    public func updatePreAuth(_ payment: POSPreauth) {
+        preAuths.removeAll(where: {$0.paymentId == payment.paymentId})
+        preAuths.append(payment)
+
+        for listener in storeListeners {
+            (listener as? POSStoreListener)?.preAuthUpdated(payment)
+        }
+    }
+    
+    public func removePreAuth(_ payment: POSPreauth) {
+        guard let index = preAuths.firstIndex(where: { $0.paymentId == payment.paymentId }) else {
             debugPrint("Couldn't find PreAuth to remove")
             return
         }
@@ -101,7 +110,7 @@ public class POSStore {
     }
     
     public func removeValutedCard(_ card: POSCard) {
-        guard let index = vaultedCards.index(where: { $0.first6 == card.first6 && $0.last4 == card.last4 && card.token == card.token}) else { return }
+        guard let index = vaultedCards.firstIndex(where: { $0.first6 == card.first6 && $0.last4 == card.last4 && card.token == card.token}) else { return }
         vaultedCards.remove(at: index)
         for listener in storeListeners {
             (listener as? POSStoreListener)?.vaultCardRemoved(card)
@@ -127,6 +136,7 @@ public protocol POSStoreListener:AnyObject {
     func newOrderCreated(_ order:POSOrder)
     func preAuthAdded(_ payment:POSPayment)
     func preAuthRemoved(_ payment:POSPayment)
+    func preAuthUpdated(_ payment:POSPreauth)
     func vaultCardAdded(_ card:POSCard)
     func vaultCardRemoved(_ card:POSCard)
     func manualRefundAdded(_ credit:POSNakedRefund)

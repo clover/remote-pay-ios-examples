@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		47A6A763F06D9BCC500DD2D1 /* Pods_CloverConnector_iOS_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DA2362BAF8C98B4434B6E03 /* Pods_CloverConnector_iOS_Example.framework */; };
 		72046C3522027BF200213C77 /* DisplayReceiptOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72046C3422027BF200213C77 /* DisplayReceiptOptionsViewController.swift */; };
+		72926D112368DCB300043E7B /* POSPreauth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72926D102368DCB300043E7B /* POSPreauth.swift */; };
+		72BF79F525140E8B006B5D46 /* POSAdditionalChargeAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BF79F425140E8B006B5D46 /* POSAdditionalChargeAmount.swift */; };
 		72CD89B722384BF100716BB3 /* TipSuggestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CD89B622384BF100716BB3 /* TipSuggestionsViewController.swift */; };
 		E3614E52215E812C003F0758 /* LoyaltyTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3614E51215E812C003F0758 /* LoyaltyTestViewController.swift */; };
 		E37E1D87218CF40E00F824F3 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = E37E1D86218CF40E00F824F3 /* README.md */; };
@@ -79,6 +81,8 @@
 		6DA2362BAF8C98B4434B6E03 /* Pods_CloverConnector_iOS_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CloverConnector_iOS_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		71752588147198EE313029DA /* Pods-CloverConnector iOS Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CloverConnector iOS Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CloverConnector iOS Example/Pods-CloverConnector iOS Example.debug.xcconfig"; sourceTree = "<group>"; };
 		72046C3422027BF200213C77 /* DisplayReceiptOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayReceiptOptionsViewController.swift; sourceTree = "<group>"; };
+		72926D102368DCB300043E7B /* POSPreauth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POSPreauth.swift; sourceTree = "<group>"; };
+		72BF79F425140E8B006B5D46 /* POSAdditionalChargeAmount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POSAdditionalChargeAmount.swift; sourceTree = "<group>"; };
 		72CD89B622384BF100716BB3 /* TipSuggestionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipSuggestionsViewController.swift; sourceTree = "<group>"; };
 		E3614E51215E812C003F0758 /* LoyaltyTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyTestViewController.swift; sourceTree = "<group>"; };
 		E37E1D86218CF40E00F824F3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
@@ -202,6 +206,7 @@
 		E39B4A9020EFE0C2008CA6AF /* model */ = {
 			isa = PBXGroup;
 			children = (
+				72926D102368DCB300043E7B /* POSPreauth.swift */,
 				E39B4A9120EFE0C2008CA6AF /* POSDiscount.swift */,
 				E39B4A9220EFE0C2008CA6AF /* POSRefund.swift */,
 				E39B4A9320EFE0C2008CA6AF /* POSOrder.swift */,
@@ -213,6 +218,7 @@
 				E39B4A9920EFE0C2008CA6AF /* POSPayment.swift */,
 				E39B4A9A20EFE0C2008CA6AF /* POSLineItem.swift */,
 				E39B4A9B20EFE0C2008CA6AF /* POSItem.swift */,
+				72BF79F425140E8B006B5D46 /* POSAdditionalChargeAmount.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -276,7 +282,7 @@
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = Q993233M8T;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1030;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -374,6 +380,7 @@
 				E39B4AC120EFE0C2008CA6AF /* POSItem.swift in Sources */,
 				E39B4AB820EFE0C2008CA6AF /* POSRefund.swift in Sources */,
 				E3614E52215E812C003F0758 /* LoyaltyTestViewController.swift in Sources */,
+				72926D112368DCB300043E7B /* POSPreauth.swift in Sources */,
 				E39B4AA520EFE0C2008CA6AF /* MiscViewController.swift in Sources */,
 				E39B4AAA20EFE0C2008CA6AF /* VaultCardViewController.swift in Sources */,
 				72CD89B722384BF100716BB3 /* TipSuggestionsViewController.swift in Sources */,
@@ -400,6 +407,7 @@
 				E39B4AA920EFE0C2008CA6AF /* OrdersTableViewController.swift in Sources */,
 				E39B4AB020EFE0C2008CA6AF /* SignatureViewController.swift in Sources */,
 				E39B4AA420EFE0C2008CA6AF /* ManualRefundViewController.swift in Sources */,
+				72BF79F525140E8B006B5D46 /* POSAdditionalChargeAmount.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -543,10 +551,11 @@
 				INFOPLIST_FILE = "CloverConnector iOS Example/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 4.0;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = com.clover.CloverConnectorExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -562,10 +571,11 @@
 				INFOPLIST_FILE = "CloverConnector iOS Example/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 4.0;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = com.clover.CloverConnectorExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

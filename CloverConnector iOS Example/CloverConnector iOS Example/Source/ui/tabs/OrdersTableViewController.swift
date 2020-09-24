@@ -64,6 +64,9 @@ class OrdersTableViewController : UITableViewController, POSStoreListener, POSOr
         self.store.addStoreListener(self)
         store.addCurrentOrderListener(self)
         selOrder = store.orders.last
+        
+        ordersTable.estimatedRowHeight = 200
+        ordersTable.rowHeight = UITableView.automaticDimension
     }
     
     fileprivate var cloverConnector:ICloverConnector? {
@@ -87,6 +90,11 @@ class OrdersTableViewController : UITableViewController, POSStoreListener, POSOr
             cell.orderNumberLabel.text = String(order.orderNumber)
             cell.orderStatusLabel.text = order.status.rawValue
             cell.orderDateLabel.text = String(describing: order.date)
+            
+            cell.taxesLabel.text = (CurrencyUtils.IntToFormat(order.getTaxAmount()) ?? CurrencyUtils.FormatZero())
+            cell.tipsLabel.text = (CurrencyUtils.IntToFormat(order.getTipAmount()) ?? CurrencyUtils.FormatZero())
+            cell.additionalChargesLabel.text = (CurrencyUtils.IntToFormat(order.getAdditionalChargeAmount()) ?? CurrencyUtils.FormatZero())
+            
             return cell
         case .payment:
             guard let payment = item.data as? POSPayment,
@@ -197,10 +205,6 @@ class OrdersTableViewController : UITableViewController, POSStoreListener, POSOr
         selOrder = items[indexPath.row].data as? POSOrder
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 65
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let orderDetailsVC = segue.destination as? OrderDetailsViewController, let indexPath = tableView.indexPathForSelectedRow {
             orderDetailsVC.selOrder = items[indexPath.row].data as? POSOrder
@@ -220,6 +224,9 @@ class OrdersTableViewController : UITableViewController, POSStoreListener, POSOr
         
     }
     func preAuthRemoved(_ payment:POSPayment) {
+        
+    }
+    func preAuthUpdated(_ payment: POSPreauth) {
         
     }
     func vaultCardAdded(_ card:POSCard) {
@@ -263,7 +270,9 @@ class OrdersTableViewCell : UITableViewCell {
     @IBOutlet weak var orderPriceLabel: UILabel!
     @IBOutlet weak var orderDateLabel: UILabel!
     @IBOutlet weak var orderStatusLabel: UILabel!
-    
+    @IBOutlet weak var taxesLabel: UILabel!
+    @IBOutlet weak var tipsLabel: UILabel!
+    @IBOutlet weak var additionalChargesLabel: UILabel!
 }
 
 class OrdersTablePaymentViewCell : UITableViewCell {
@@ -271,7 +280,6 @@ class OrdersTablePaymentViewCell : UITableViewCell {
     @IBOutlet weak var paymentExternalIdLabel: UILabel!
     @IBOutlet weak var paymentPriceLabel: UILabel!
     @IBOutlet weak var paymentTipLabel: UILabel!
-    
 }
 
 class OrdersTableItemViewCell : UITableViewCell {

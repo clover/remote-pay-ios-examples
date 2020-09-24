@@ -15,6 +15,7 @@ public class POSPayment:POSExchange {
     public var tipAmount:Int?
     public var cashbackAmount:Int?
     public var externalPaymentId:String?
+    public var additionalCharges = [POSAdditionalChargeAmount]()
     
     public var last4:String?
     public var name:String?
@@ -28,6 +29,15 @@ public class POSPayment:POSExchange {
         super.init(orderId: orderId, paymentId: paymentId, employeeId: employeeId, amount: amount)
     }
     
+    public func sumAdditionalCharges() -> Int {
+        var additionalChargesTotal: Int = 0
+        
+        for charge in additionalCharges {
+            additionalChargesTotal += charge.amount ?? 0
+        }
+        
+        return additionalChargesTotal
+    }
 }
 
 public enum PaymentType :String {

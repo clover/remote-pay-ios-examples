@@ -79,6 +79,16 @@ public class POSOrder {
         return Int(tax)
     }
     
+    public func getAdditionalChargeAmount() -> Int {
+        var additionalCharges: Int = 0
+        
+        for payment in payments {
+            additionalCharges += payment.sumAdditionalCharges()
+        }
+        
+        return additionalCharges
+    }
+    
     public func getTipAmount() -> Int {
         var tipAmount:Int64 = 0
         for payment in payments {
@@ -114,7 +124,7 @@ public class POSOrder {
         lineItem.quantity -= 1
         
         if lineItem.quantity == 0 {
-            if let index = items.index(where: { (li) -> Bool in
+            if let index = items.firstIndex(where: { (li) -> Bool in
                 return li === lineItem
             }) {
                 items.remove(at: index)
