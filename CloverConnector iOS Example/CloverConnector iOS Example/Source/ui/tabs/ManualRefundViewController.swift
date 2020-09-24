@@ -83,6 +83,7 @@ extension ManualRefundViewController : POSStoreListener {
     func newOrderCreated(_ order:POSOrder){}
     func preAuthAdded(_ payment:POSPayment){}
     func preAuthRemoved(_ payment:POSPayment){}
+    func preAuthUpdated(_ payment: POSPreauth) {}
     func vaultCardAdded(_ card:POSCard){}
     func vaultCardRemoved(_ card:POSCard){}
     func manualRefundAdded(_ credit:POSNakedRefund){

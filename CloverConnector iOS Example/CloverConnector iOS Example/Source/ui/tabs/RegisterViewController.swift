@@ -155,7 +155,7 @@ class RegisterViewController:UIViewController, POSOrderListener, POSStoreListene
     }
     
     func itemRemoved(_ item:POSLineItem) {
-        if let index = currentDisplayOrder.lineItems.index(where: { $0.id == item.item.id }) {
+        if let index = currentDisplayOrder.lineItems.firstIndex(where: { $0.id == item.item.id }) {
             currentDisplayOrder.lineItems.remove(at: index)
         }
         
@@ -164,7 +164,7 @@ class RegisterViewController:UIViewController, POSOrderListener, POSStoreListene
     }
     
     func itemModified(_ item:POSLineItem) {
-        if let index = currentDisplayOrder.lineItems.index(where: { $0.id == item.item.id }) {
+        if let index = currentDisplayOrder.lineItems.firstIndex(where: { $0.id == item.item.id }) {
             let displayLineItem = currentDisplayOrder.lineItems[index]
             displayLineItem.quantity = String(item.quantity)
             displayLineItem.name = item.item.name
@@ -206,6 +206,10 @@ class RegisterViewController:UIViewController, POSOrderListener, POSStoreListene
     
     func preAuthRemoved(_ payment: POSPayment) {
         // not needed in register
+    }
+    
+    func preAuthUpdated(_ payment: POSPreauth) {
+        // not needed in register... for now
     }
     
     func vaultCardAdded(_ card: POSCard) {

@@ -151,6 +151,7 @@ extension VaultCardViewController : POSStoreListener {
     public func preAuthAdded(_ payment:POSPayment){
     }
     public func preAuthRemoved(_ payment:POSPayment){}
+    public func preAuthUpdated(_ payment: POSPreauth) {}
     public func vaultCardAdded(_ card:POSCard){
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2, execute: {
             self.tableView.reloadData()

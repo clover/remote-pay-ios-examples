@@ -4,18 +4,18 @@ use_frameworks!
 
 target 'CloverConnector iOS Example' do
 
-    # The queuePriority branch of our fork of the Starscream framework is required for reliable transport of large files
-    # Defining it here in the PodFile overrides the podspec dependency, which isn't allowed to specify a specific location and branch
-    pod 'Starscream', :git => 'https://github.com/clover/Starscream.git', :branch => 'queuePriority-2.0.0'
+  # The queuePriority branch of our fork of the Starscream framework is required for reliable transport of large files
+  # Defining it here in the PodFile overrides the podspec dependency, which isn't allowed to specify a specific location and branch
+  pod 'Starscream', :git => 'https://github.com/clover/Starscream.git', :branch => 'queuePriority-3.0.0'
 
-  pod 'CloverConnector', :path => '../../remote-pay-ios'
+  pod 'CloverConnector', :git => 'https://github.com/clover/remote-pay-ios.git', :tag => '4.0.0'
   
   post_install do |installer|
       ['CloverConnector'].each do |targetName|
           targets = installer.pods_project.targets.select { |target| target.name == targetName }
           target = targets[0]
           target.build_configurations.each do |config|
-              config.build_settings['SWIFT_VERSION'] = '4.2'
+              config.build_settings['SWIFT_VERSION'] = '5.3'
           end
       end
   end

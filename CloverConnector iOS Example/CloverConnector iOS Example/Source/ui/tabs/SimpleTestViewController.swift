@@ -262,6 +262,13 @@ class BaseExecutor : DefaultCloverConnectorListener {
         promptForChallenge(request, challengeIndex: 0)
     }
     
+    override func onInvalidStateTransitionResponse(_ response: InvalidStateTransitionResponse) {
+        let message = "Invalid transition from \(response.state?.rawValue ?? "previous state") to \(response.requestedTransition ?? "requested state")"
+        debugPrint(message)
+        debugPrint(response)
+        showMessage("Invalid State Transition", message: message)
+    }
+    
     fileprivate func promptForChallenge(_ request:ConfirmPaymentRequest, challengeIndex index:Int) {
         guard let challenges = request.challenges else { return }
         guard index < challenges.count else { return }

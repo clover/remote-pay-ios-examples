@@ -161,7 +161,7 @@ extension ViewController: AVCaptureMetadataOutputObjectsDelegate {
                 //clean up the string to put in the text field (remove the auth token and "?")
                 var cleanedString: String? = urlValue
                 var components = URLComponents(string: urlValue)
-                if let index = components?.queryItems?.index(where: { $0.name == "authenticationToken"}) {
+                if let index = components?.queryItems?.firstIndex(where: { $0.name == "authenticationToken"}) {
                     components?.queryItems?.remove(at: index)
                     cleanedString = components?.url?.absoluteString
                 }
